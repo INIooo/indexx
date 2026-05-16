@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohan Patil — Rohan2CorE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            /* Background remains dark to show stars */
+            --bg-color: #000000;
+            
+            /* Transparent glass effect for the UI */
+            --card-bg-transparent: rgba(15, 17, 21, 0.6); /* Transparent Gray */
+            --border-transparent: rgba(255, 255, 255, 0.08); /* Faint White Border */
+            
+            --text-primary: #ffffff;
+            --text-secondary: #c9d1d9; /* Slightly brighter secondary text for transparency */
+            --accent-red: #ff0000;
+            --border-radius: 28px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* --- SAVAGE SHOOTING STAR BACKGROUND --- */
+        .stars-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .night-sky {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform: rotateZ(45deg);
+        }
+
+        .shooting-star {
+            position: absolute;
+            left: 50%; top: 50%;
+            height: 2px;
+            background: linear-gradient(-45deg, rgba(255, 255, 255, 1), rgba(255, 0, 0, 0));
+            border-radius: 999px;
+            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 1));
+            animation: tail 3000ms ease-in-out infinite, shooting 3000ms ease-in-out infinite;
+            opacity: 0;
+        }
+
+        .shooting-star::before, .shooting-star::after {
+            content: '';
+            position: absolute;
+            top: calc(50% - 1px); right: 0;
+            height: 2px;
+            background: linear-gradient(-45deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+            transform: translateX(50%) rotateZ(45deg);
+            border-radius: 100%;
+            animation: shining 3000ms ease-in-out infinite;
+        }
+
+        .shooting-star::after { transform: translateX(50%) rotateZ(-45deg); }
+
+        @keyframes tail {
+            0% { width: 0; opacity: 0; }
+            30% { width: 100px; opacity: 1; }
+            100% { width: 0; opacity: 0; }
+        }
+
+        @keyframes shining {
+            0% { width: 0; }
+            50% { width: 30px; }
+            100% { width: 0; }
+        }
+
+        @keyframes shooting {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(500px); }
+        }
+
+        .shooting-star:nth-child(1) { top: 10%; left: 10%; animation-delay: 0ms; }
+        .shooting-star:nth-child(2) { top: 30%; left: 20%; animation-delay: 500ms; animation-duration: 3500ms; }
+        .shooting-star:nth-child(3) { top: 50%; left: 5%; animation-delay: 1000ms; }
+        .shooting-star:nth-child(4) { top: 70%; left: 15%; animation-delay: 1500ms; animation-duration: 4000ms; }
+        .shooting-star:nth-child(5) { top: 20%; left: 40%; animation-delay: 2000ms; }
+        .shooting-star:nth-child(6) { top: 40%; left: 35%; animation-delay: 2500ms; animation-duration: 3200ms;}
+        .shooting-star:nth-child(7) { top: 60%; left: 50%; animation-delay: 3000ms; }
+        .shooting-star:nth-child(8) { top: 80%; left: 45%; animation-delay: 3500ms; animation-duration: 3800ms;}
+
+        /* --- TRANSPARENT UI STYLES --- */
+        
+        header {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px;
+            z-index: 10;
+            background-color: var(--card-bg-transparent);
+            backdrop-filter: blur(10px); /* Glass blur for header */
+            border-radius: 20px;
+            border: 1px solid var(--border-transparent);
+            margin-bottom: 20px;
+        }
+
+        .site-brand { line-height: 1.2; }
+        .site-brand .name { font-size: 1.5rem; font-weight: 800; }
+        .site-brand .handle { font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; margin-top: 2px; }
+
+        nav ul { display: flex; list-style: none; gap: 24px; }
+        nav a { font-size: 0.9rem; color: var(--text-primary); text-decoration: none; cursor: pointer; font-weight: 600; transition: color 0.3s;}
+        nav a:hover { color: var(--accent-red); }
+
+        .page { display: none; width: 100%; max-width: 1100px; position: relative; z-index: 10; animation: savageFade 0.5s ease-out forwards; }
+        .page.active { display: block; }
+        
+        @keyframes savageFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .grid-container {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(4, 1fr);
+            width: 100%;
+        }
+
+        .card {
+            background-color: var(--card-bg-transparent);
+            padding: 35px;
+            border-radius: var(--border-radius);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-transparent);
+            backdrop-filter: blur(5px); /* Subtler blur for cards */
+        }
+        
+        /* Highlight on hover */
+        .card:hover { 
+            transform: translateY(-5px); 
+            border-color: rgba(255, 0, 0, 0.3); /* Subtle red border on hover */
+            background-color: rgba(20, 22, 26, 0.7); /* Slightly darker transparent */
+        }
+
+        .card-icon { font-size: 1.8rem; color: #ffffff; margin-bottom: 25px; }
+        .card-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 12px; line-height: 1.2; }
+        .card-text { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
+
+        .hero-info { grid-column: span 2; grid-row: span 2; }
+        .pfp-small { 
+            width: 65px; height: 65px; border-radius: 50%; margin-bottom: 20px; 
+            border: 2px solid var(--accent-red); object-fit: cover;
+        }
+        .big-text { font-size: 4.5rem; font-weight: 800; margin-bottom: 15px; letter-spacing: -2px; }
+
+        .hero-image-card {
+            grid-column: span 2; grid-row: span 2;
+            padding: 0; overflow: hidden;
+            background: url('img.png') no-repeat center center;
+            background-size: cover;
+            min-height: 450px;
+            backdrop-filter: none; /* Image card doesn't need blur */
+        }
+
+        .social-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+        .social-item {
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(26, 29, 35, 0.8); /* Semi-transparent */
+            padding: 10px 18px;
+            border-radius: 12px; font-size: 0.85rem; color: #fff; text-decoration: none;
+            transition: 0.3s;
+            border: 1px solid var(--border-transparent);
+        }
+        .social-item:hover { background: var(--accent-red); border-color: var(--accent-red); }
+
+        .contact-card {
+            grid-column: span 3;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .btn-red {
+            background-color: var(--accent-red);
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-weight: 900;
+            color: white; border: none; cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2);
+        }
+        .btn-red:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4); }
+
+        footer {
+            width: 100%; max-width: 1100px; margin-top: 50px;
+            padding: 30px; border-top: 1px solid var(--border-transparent);
+            display: flex; justify-content: space-between;
+            font-size: 0.85rem; color: var(--text-secondary);
+            z-index: 10; position: relative;
+            background-color: var(--card-bg-transparent);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .grid-container { grid-template-columns: repeat(2, 1fr); }
+            .contact-card { grid-column: span 2; }
+        }
+        @media (max-width: 600px) {
+            header { flex-direction: column; text-align: center; gap: 15px; padding: 20px; }
+            .grid-container { grid-template-columns: 1fr; }
+            .hero-info, .hero-image-card, .contact-card { grid-column: span 1; grid-row: auto; }
+            .contact-card { flex-direction: column; text-align: center; gap: 20px; }
+            footer { flex-direction: column; text-align: center; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars-container">
+        <div class="night-sky">
+            <div class="shooting-star"></div>
+            <div class="shooting-star"></div>
+            <div class="shooting-star"></div>
+            <div class="shooting-star"></div>
+            <div class="shooting-star"></div>
+            <div class="shooting-star"></div>
+            <div class="shooting-star"></div>
+            <div class="shooting-star"></div>
+        </div>
+    </div>
+
+    <header>
+        <div class="site-brand">
+            <div class="name">Rohan Patil</div>
+            <div class="handle">ROHAN2CORE</div>
+        </div>
+        <nav>
+            <ul>
+                <li><a onclick="showPage('home')">Home</a></li>
+                <li><a onclick="showPage('works')">Works</a></li>
+                <li><a onclick="showPage('contact')">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="home" class="page active">
+        <div class="grid-container">
+            <div class="card hero-info">
+                <img src="img.png" class="pfp-small" alt="Rohan Patil">
+                <h1 class="big-text">I'm</h1>
+                <p class="card-text">Rohan Patil. 14 Years Old. While you were following tutorials, I was breaking the compilers. 6 Years deep into C++, GDScript, and digital domination. I don't follow trends; I build the engines they run on.</p>
+                <div class="social-row">
+                    <a href="https://instagram.com/rohan_2_core/" target="_blank" rel="noopener" class="social-item"><i class="fa-brands fa-instagram"></i> INSTAGRAM</a>
+                    <div class="social-item"><i class="fa-brands fa-discord"></i> rohan2core</div>
+                </div>
+                <div style="margin-top: 24px;">
+                    <a href="https://github.com/INIooo/X-Bind" target="_blank" rel="noopener" class="btn-red" style="text-decoration:none; display: inline-block; font-size: 0.85rem;">
+                        <i class="fa-solid fa-download" style="margin-right: 8px;"></i> Download X-Bind
+                    </a>
+                </div>
+            </div>
+            <div class="card hero-image-card"></div>
+            <div class="card" style="grid-column: span 2;">
+                <div class="card-icon"><i class="fa-solid fa-fan"></i></div>
+                <h2 class="card-title">Game Dev</h2>
+                <p class="card-text">Specializing in memory optimization and custom engines. If it doesn't run at 144fps, it's trash.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-gear"></i></div>
+                <h2 class="card-title">AI Workflow</h2>
+                <p class="card-text">Claude is my assistant; I am the architect. Speed is the only currency I care about.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-asterisk"></i></div>
+                <h2 class="card-title">The Arsenal</h2>
+                <p class="card-text">Unreal. CryEngine. Godot. Mastering the tools of creation and destruction.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-eye"></i></div>
+                <h2 class="card-title">Intellect</h2>
+                <p class="card-text">Processing reality faster than you process this text. Smarter? Always.</p>
+            </div>
+            
+            <!-- X-bind Project -->
+            <div class="card" style="grid-column: span 4; border-color: rgba(255,0,0,0.4); background-color: rgba(20, 22, 26, 0.4);">
+                <h2 class="card-title" style="color:var(--accent-red)">X-bind</h2>
+                <p class="card-text">A lightning-fast, resource-optimized tool I built from scratch to convert keyboard and mouse inputs into seamless Xbox controller signals. Engineered for zero input latency with an aggressive memory-management trick that keeps the background RAM footprint to just a few megabytes, ensuring zero dropped frames in-game.</p>
+                <div style="margin-top: 25px;">
+                    <a href="https://github.com/INIooo/X-Bind" target="_blank" rel="noopener" class="btn-red" style="text-decoration:none; display: inline-block; font-size: 0.85rem;">
+                        <i class="fa-solid fa-download" style="margin-right: 8px;"></i> Download it and try it
+                    </a>
+                </div>
+            </div>
+
+            <div class="card contact-card">
+                <div>
+                    <div class="card-icon"><i class="fa-solid fa-circle-dot"></i></div>
+                    <h2 class="card-title">TRANSMISSION</h2>
+                    <p class="card-text">Stop watching. Start building. Or just get out of the way.</p>
+                </div>
+                <button class="btn-red" onclick="showPage('contact')">INITIALIZE</button>
+            </div>
+        </div>
+    </main>
+
+    <main id="works" class="page">
+        <div class="grid-container">
+            <div class="card" style="grid-column: span 4;">
+                <h1 class="big-text" style="font-size: 3rem;">MY LEGACY</h1>
+                <p class="card-text">Projects that prove I'm operating on a different level.</p>
+            </div>
+
+            <div class="card" style="grid-column: span 2;">
+                <h2 class="card-title" style="color:var(--accent-red)">ARPP2 Engine</h2>
+                <p class="card-text">My private raytraced engine. Built from scratch because standard tools are too restrictive for my vision.</p>
+            </div>
+            <div class="card" style="grid-column: span 2;">
+                <h2 class="card-title" style="color:var(--accent-red)">Love Or Lust</h2>
+                <p class="card-text">A psychological experience grounded in reality. Not just a game, a statement.</p>
+            </div>
+            <div class="card" style="grid-column: span 4;">
+                <h2 class="card-title">Something's Off</h2>
+                <p class="card-text">Horror that actually messes with your head. Currently in development.</p>
+            </div>
+        </div>
+    </main>
+
+    <main id="contact" class="page">
+        <div class="grid-container">
+            <div class="card" style="grid-column: span 4; text-align: center;">
+                <h1 class="big-text" style="font-size: 3.5rem;">DONT WASTE<br>MY TIME</h1>
+                <p class="card-text" style="font-size: 1.2rem; margin-bottom: 30px;">If it's legendary, I'm listening. If it's average, keep it to yourself.</p>
+                <div class="social-row" style="justify-content: center; margin-bottom: 40px;">
+                   <a href="mailto:contact@iniolabs.net" class="btn-red" style="text-decoration:none">SEND EMAIL</a>
+                </div>
+                <div style="text-align: left; max-width: 400px; margin: 0 auto;">
+                    <p class="card-title">Discord: <span style="color:var(--accent-red)">rohan2core</span></p>
+                    <p class="card-title">Instagram: <span style="color:var(--accent-red)">@rohan_2_core</span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <strong style="letter-spacing: 2px;">ROHAN2CORE</strong>
+        <span style="color: var(--accent-red); font-weight: 900;">STATUS: ACTIVE & LETHAL</span>
+    </footer>
+
+    <script>
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0,0);
+        }
+    </script>
+</body>
+</html>
