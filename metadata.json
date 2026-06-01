@@ -1,0 +1,6 @@
+{
+  "name": "Obsidian Protocol",
+  "description": "A retro-industrial developer portfolio and system diagnostics terminal built with React and Tailwind CSS.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
