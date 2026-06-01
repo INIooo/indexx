@@ -3,11 +3,1220 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
+    <title>DEV_CORE_OS_V1.0 // Rohan Patil</title>
+    
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Configuration -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              surface: {
+                custom: '#121315',
+                dim: '#121315',
+                bright: '#38393b',
+                'container-lowest': '#0d0e10',
+                'container-low': '#1b1c1e',
+                'container': '#1f2022',
+                'container-high': '#292a2c',
+                'container-highest': '#343537',
+                variant: '#343537',
+              },
+              'on-surface': '#e3e2e5',
+              'on-surface-variant': '#e3bfb3',
+              'inverse-surface': '#e3e2e5',
+              'inverse-on-surface': '#303033',
+              outline: '#aa897f',
+              'outline-variant': '#5b4138',
+              'surface-tint': '#ffb59c',
+              primary: '#ffb59c',
+              'on-primary': '#5c1900',
+              'primary-container': '#ff5f1f',
+              'on-primary-container': '#561700',
+              'inverse-primary': '#ab3600',
+              secondary: '#e6feff',
+              'on-secondary': '#003739',
+              'secondary-container': '#00f4fe',
+              'on-secondary-container': '#006c71',
+              tertiary: '#c7c6ca',
+              'on-tertiary': '#2f3033',
+              'tertiary-container': '#949397',
+              'on-tertiary-container': '#2b2c2f',
+              error: '#ffb4ab',
+              'on-error': '#690005',
+              'error-container': '#93000a',
+              'on-error-container': '#ffdad6',
+              'primary-fixed': '#ffdbcf',
+              'primary-fixed-dim': '#ffb59c',
+              'on-primary-fixed': '#390c00',
+              'on-primary-fixed-variant': '#832700',
+              'secondary-fixed': '#63f7ff',
+              'secondary-fixed-dim': '#00dce5',
+              'on-secondary-fixed': '#002021',
+              'on-secondary-fixed-variant': '#004f53',
+              'tertiary-fixed': '#e3e2e6',
+              'tertiary-fixed-dim': '#c7c6ca',
+              'on-tertiary-fixed': '#1a1b1e',
+              'on-tertiary-fixed-variant': '#46474a',
+              'background-custom': '#121315',
+              'on-background-custom': '#e3e2e5',
+            },
+            fontFamily: {
+              sans: ["Space Grotesk", "Inter", "sans-serif"],
+              mono: ["JetBrains Mono", "SFMono-Regular", "monospace"],
+              label: ["Space Mono", "monospace"],
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Vanilla stylesheet -->
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="src/main.tsx"></script>
+  <body class="min-h-screen bg-[#121315] text-[#e3e2e5] flex flex-col font-mono relative overflow-x-hidden hex-grid select-none pb-12">
+    <!-- Atmospheric glows -->
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="absolute bottom-10 right-10 w-96 h-96 bg-[#00f4fe]/5 rounded-full blur-[140px] pointer-events-none"></div>
+
+    <!-- FIXED RETRO TOP HEADER NAVIGATION -->
+    <header class="fixed top-0 w-full z-40 border-b-2 border-outline-variant bg-surface-container-high/90 backdrop-blur shadow-[0_4px_12px_rgba(0,0,0,0.55)]">
+      <div class="max-w-7xl mx-auto flex justify-between items-center px-6 md:px-12 py-4">
+        <!-- Logo -->
+        <div 
+          id="header-logo"
+          class="font-sans text-xl md:text-2xl font-bold text-primary tracking-tighter uppercase cursor-pointer select-none active:scale-95 transition-transform hover:brightness-110 flex items-center gap-1.5"
+        >
+          DEV_CORE_OS_V1.0
+        </div>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex gap-8 items-center">
+          <button id="nav-btn-home" class="active">HOME</button>
+          <button id="nav-btn-projects">PROJECTS</button>
+          <button id="nav-btn-lab">LAB</button>
+          <button id="nav-btn-contact">CONTACT</button>
+        </nav>
+
+        <!-- Utility Buttons -->
+        <div class="flex gap-4 items-center">
+          <button id="tool-btn-chat" title="Toggle Cognitive Coprocessor AI Chatbot" class="tool-btn">
+            <i data-lucide="bot" class="w-5 h-5"></i>
+          </button>
+          <button id="tool-btn-terminal" title="Toggle Web Shell Terminal" class="tool-btn">
+            <i data-lucide="terminal" class="w-5 h-5"></i>
+          </button>
+          <button id="tool-btn-settings" title="Toggle Hardware Configs" class="tool-btn">
+            <i data-lucide="settings" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MOBILE BOTTOM NAVIGATION -->
+    <div class="md:hidden fixed bottom-0 inset-x-0 bg-surface-container-high border-t border-outline-variant z-40 p-2 flex justify-around">
+      <button id="mobile-nav-btn-home" class="flex flex-col items-center p-2 font-label text-[9px] font-bold tracking-wider text-primary">
+        <span>HOME</span>
+        <span class="h-1 w-4 bg-primary rounded-full mt-1 shadow-[0_0_5px_#ffb59c]"></span>
+      </button>
+      <button id="mobile-nav-btn-projects" class="flex flex-col items-center p-2 font-label text-[9px] font-bold tracking-wider text-on-surface-variant">
+        <span>PROJECTS</span>
+        <span class="h-1 w-4 bg-primary rounded-full mt-1 shadow-[0_0_5px_#ffb59c] hidden"></span>
+      </button>
+      <button id="mobile-nav-btn-lab" class="flex flex-col items-center p-2 font-label text-[9px] font-bold tracking-wider text-on-surface-variant">
+        <span>LAB</span>
+        <span class="h-1 w-4 bg-primary rounded-full mt-1 shadow-[0_0_5px_#ffb59c] hidden"></span>
+      </button>
+      <button id="mobile-nav-btn-contact" class="flex flex-col items-center p-2 font-label text-[9px] font-bold tracking-wider text-on-surface-variant">
+        <span>CONTACT</span>
+        <span class="h-1 w-4 bg-primary rounded-full mt-1 shadow-[0_0_5px_#ffb59c] hidden"></span>
+      </button>
+    </div>
+
+    <!-- MAIN GRID CHASSIS -->
+    <main class="flex-grow pt-28 pb-16 px-4 md:px-12 max-w-7xl mx-auto w-full">
+      
+      <!-- ========================================== -->
+      <!-- HOME VIEW -->
+      <!-- ========================================== -->
+      <div id="view-home" class="tab-content active space-y-6">
+        <div class="relative border border-outline-variant/30 tactile-raised rounded-xl p-4 md:p-8 overflow-hidden hex-grid">
+          <!-- Corners decor -->
+          <div class="screw-head top-4 left-4"></div>
+          <div class="screw-head top-4 right-4"></div>
+          <div class="screw-head bottom-4 left-4"></div>
+          <div class="screw-head bottom-4 right-4"></div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-2">
+            <!-- Left Bio Console -->
+            <div class="lg:col-span-8 space-y-6">
+              <div class="recessed-panel rounded-lg p-6 md:p-8 border border-outline-variant/20 relative overflow-hidden">
+                <div class="scanline absolute inset-0 opacity-15"></div>
+                <div class="flex items-center gap-3 mb-6">
+                  <span class="relative flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-primary led-orange-glow"></span>
+                  </span>
+                  <span class="font-label text-xs font-bold text-primary tracking-widest">SYSTEM_ACTIVE</span>
+                </div>
+                <h1 class="font-sans text-5xl md:text-6xl font-bold text-on-surface tracking-tighter uppercase mb-4">
+                  Rohan Patil
+                </h1>
+                <div class="border-l-4 border-primary pl-4 mb-8">
+                  <p class="font-label text-xs md:text-sm font-bold uppercase tracking-wider text-on-surface-variant leading-none">
+                    15 Years Old // C++ GDScript Specialist
+                  </p>
+                </div>
+                <p class="font-mono text-base md:text-lg text-on-surface/90 leading-relaxed max-w-3xl">
+                  "While you were following tutorials, I was breaking the compilers. 6 Years deep into C++, GDScript, and digital domination. I don't follow trends; I build the engines they run on."
+                </p>
+              </div>
+
+              <!-- Switches -->
+              <div class="flex flex-wrap gap-4">
+                <button id="bento-btn-projects" class="btn-caps tactile-raised">
+                  <i data-lucide="cpu" class="w-5 h-5 text-primary"></i>
+                  <span>VIEW_PROJECTS</span>
+                </button>
+                <button id="bento-btn-contact" class="btn-caps recessed-panel hover:bg-surface-container-high text-secondary border border-outline-variant/20">
+                  <i data-lucide="mail" class="w-5 h-5 text-secondary"></i>
+                  <span>CONTACT_ME</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Right stats widgets -->
+            <div class="lg:col-span-4 space-y-6">
+              <!-- Engine Load load indicator -->
+              <div class="tactile-raised rounded-lg p-6 border border-outline-variant/30 relative">
+                <div class="flex justify-between items-center mb-4 font-mono text-xs">
+                  <span class="text-on-surface-variant font-bold uppercase">ENGINE_CORE_LOAD</span>
+                  <span id="bento-core-load-val" class="text-primary font-bold">0.42ms</span>
+                </div>
+                <div id="bento-core-load-bars" class="h-14 recessed-panel rounded flex items-end px-4 gap-1.5 overflow-hidden pb-2">
+                  <div class="h-10 w-2.5 rounded-sm bg-primary/20 transition-all duration-300"></div>
+                  <div class="h-10 w-2.5 rounded-sm bg-primary/20 transition-all duration-300"></div>
+                  <div class="h-10 w-2.5 rounded-sm bg-primary/20 transition-all duration-300"></div>
+                  <div class="h-10 w-2.5 rounded-sm bg-primary/20 transition-all duration-300"></div>
+                  <div class="h-10 w-2.5 rounded-sm bg-primary/20 transition-all duration-300"></div>
+                  <div class="h-10 w-2.5 rounded-sm bg-primary/20 transition-all duration-300"></div>
+                  <div class="h-10 w-2.5 rounded-sm bg-primary/20 transition-all duration-300"></div>
+                  <div class="h-10 w-2.5 rounded-sm bg-primary/20 transition-all duration-300"></div>
+                </div>
+              </div>
+
+              <!-- Tech Stack config panel -->
+              <div class="recessed-panel rounded-lg p-6 border border-outline-variant/20 min-h-[260px] flex flex-col justify-between">
+                <div>
+                  <h3 class="font-label text-xs font-bold text-on-surface mb-6 border-b border-outline-variant/45 pb-2">
+                    TECH_STACK.CFG
+                  </h3>
+                  <div class="space-y-4 font-mono text-xs">
+                    <div class="flex items-center justify-between">
+                      <span class="text-on-surface/90 font-medium">C++ / VULKAN</span>
+                      <span class="h-2 w-2 rounded-full led-glow-secondary"></span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="text-on-surface/90 font-medium">UNREAL ENGINE 5</span>
+                      <span class="h-2 w-2 rounded-full led-orange-glow"></span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="text-on-surface/90 font-medium">PYTHON / PYTORCH</span>
+                      <span class="h-2 w-2 rounded-full led-glow-secondary"></span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="text-on-surface/90 font-medium">RUST / WASM</span>
+                      <span class="h-2 w-2 rounded-full led-glow-primary"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="pt-4 opacity-40">
+                  <div class="grid grid-cols-8 gap-1">
+                    <div class="h-1 bg-on-surface-variant rounded-sm"></div>
+                    <div class="h-1 bg-on-surface-variant rounded-sm"></div>
+                    <div class="h-1 bg-on-surface-variant rounded-sm"></div>
+                    <div class="h-1 bg-on-surface-variant rounded-sm"></div>
+                    <div class="h-1 bg-on-surface-variant rounded-sm"></div>
+                    <div class="h-1 bg-on-surface-variant rounded-sm"></div>
+                    <div class="h-1 bg-on-surface-variant rounded-sm"></div>
+                    <div class="h-1 bg-on-surface-variant rounded-sm"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Featured Project Grid Card -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+            <div id="my-guilty-card" class="tactile-raised rounded-xl overflow-hidden group cursor-pointer border border-outline-variant/30 flex flex-col h-full md:col-start-2">
+              <div class="h-48 relative overflow-hidden bg-surface-container-lowest">
+                <img
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0VnIvDmmi3tXG5G1xeO10uGhYz91dUUoh9dkypDyVqzsp5ytG85_F5JgzXyPI_B2Ejy2J2OED3_56_FfpLsyl9Kk-IUtVQO16CcTaJiQwAY-H0yuYZu0IzApgWyxbtJXEq4phrfLpJRB1LGralyd9OsMx3xI71Zy8r7Wa9pCid4F3Z7z6FCpRav_hMfM7QO1PIUP9iap45fipClFQK3_mrUoRcVzAi_ow9pudCflj_FxJV5yuvU7ruPveiMv_l3v_gKiDsAyxP6U6"
+                  alt="Ghost Shell"
+                  class="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-500 ease-out"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/90 via-transparent to-transparent"></div>
+                <span class="absolute bottom-4 left-4 font-label text-[10px] font-bold px-2.5 py-1 uppercase tracking-wider rounded bg-primary text-on-primary">
+                  FEATURED_PROJECT
+                </span>
+              </div>
+              <div class="p-6 flex flex-col flex-grow justify-between">
+                <div>
+                  <h4 class="font-sans text-xl font-bold tracking-tight text-on-surface group-hover:text-primary transition-colors mb-2 uppercase">
+                    GHOST_SHELL
+                  </h4>
+                  <p class="font-mono text-xs text-on-surface-variant leading-relaxed">
+                    AI-driven NPC behavior system using hierarchical task networks.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- PROJECTS VIEW -->
+      <!-- ========================================== -->
+      <div id="view-projects" class="tab-content space-y-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b-2 border-outline-variant/30">
+          <div>
+            <h1 class="font-sans text-4xl md:text-5xl font-bold text-on-surface tracking-tighter uppercase mb-2">
+              Deployed Modules
+            </h1>
+            <p class="font-mono text-xs font-bold text-on-surface-variant/70 uppercase tracking-widest">
+              S_ID: ROHAN_P // STATUS: ONLINE // PROJECTS_ACTIVE: 05
+            </p>
+          </div>
+
+          <!-- filter toggles -->
+          <div class="flex flex-wrap gap-2 p-1.5 bg-surface-container-lowest rounded-lg border-2 border-outline-variant industrial-slot self-start md:self-end">
+            <button id="filter-btn-all" onclick="filterModules('ALL_UNITS')" class="px-4 py-2 font-label text-[10px] font-bold rounded uppercase transition-colors tracking-wider bg-primary text-on-primary">ALL_UNITS</button>
+            <button id="filter-btn-games" onclick="filterModules('GAMES')" class="px-4 py-2 font-label text-[10px] font-bold rounded uppercase transition-colors tracking-wider text-on-surface-variant hover:bg-surface-container-highest">GAMES</button>
+            <button id="filter-btn-engines" onclick="filterModules('ENGINES')" class="px-4 py-2 font-label text-[10px] font-bold rounded uppercase transition-colors tracking-wider text-on-surface-variant hover:bg-surface-container-highest">ENGINES</button>
+            <button id="filter-btn-utilities" onclick="filterModules('UTILITIES')" class="px-4 py-2 font-label text-[10px] font-bold rounded uppercase transition-colors tracking-wider text-on-surface-variant hover:bg-surface-container-highest">UTILITIES</button>
+          </div>
+        </div>
+
+        <!-- Cards Bento Grid -->
+        <div id="projects-bento-container" class="grid grid-cols-1 md:grid-cols-12 gap-6">
+          <!-- Card 1 (Ghost/My Guilty) -->
+          <div data-category="GAMES" class="md:col-span-8 p-1 bg-surface-container-lowest rounded-xl industrial-slot flex">
+            <div class="relative w-full bg-surface-container-high rounded-lg border border-outline-variant/60 overflow-hidden flex flex-col justify-between group">
+              <div class="screw-head top-2.5 left-2.5"></div>
+              <div class="screw-head top-2.5 right-2.5"></div>
+              <div class="screw-head bottom-2.5 left-2.5"></div>
+              <div class="screw-head bottom-2.5 right-2.5"></div>
+              <div class="flex flex-col h-full justify-between">
+                <div class="h-48 relative overflow-hidden bg-surface-dim">
+                  <img
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb75jDC0FDkvsXIuOXipBRHj4P2wr7rWMjSXmH3D0KGYd77Vg7aMMN2ogKb93chFQ1kd05EV5qKxfQwj8aUl-HlE5HEYBiG5bheuFCgErWHNeku7a57W1wNODlovR5MpBcafw3tyjUhFw8JPR-ZB9eCQbPuL9jH2Qip8WWHb8PphlKKhfb28GYzDfCA97fLvYX9BV6ydZbJLPJ3AtQG5HkHw0A45ph5dF0nX7JSUwjP0GHwHolYjcTexZ2R4_7EOA0QKp0WRa8L4Sq"
+                    alt="My Guilty"
+                    class="w-full h-full object-cover opacity-65 group-hover:scale-105 group-hover:opacity-85 transition-all duration-700 pointer-events-none"
+                  />
+                  <div class="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-surface-container-high to-transparent"></div>
+                  <div class="absolute inset-0 scanline opacity-10"></div>
+                </div>
+                <div class="p-6 pt-4 relative flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                  <div>
+                    <span class="font-mono text-[10px] font-bold text-primary tracking-widest block uppercase mb-1">
+                      01 // GAME_ENGINE_BETA
+                    </span>
+                    <h3 class="font-sans text-2xl font-bold text-on-surface uppercase mb-2">My Guilty</h3>
+                    <p class="font-mono text-xs text-on-surface-variant leading-relaxed max-w-md">
+                      3D psychological narrative exploring deterministic recursion and guilt processing.
+                    </p>
+                  </div>
+                  <div class="flex gap-1.5 self-end">
+                    <span class="h-2.5 w-2.5 rounded-full bg-primary led-orange-glow"></span>
+                    <span class="h-2.5 w-2.5 rounded-full bg-primary led-orange-glow"></span>
+                    <span class="h-2.5 w-2.5 rounded-full bg-surface-container-highest"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div data-category="ENGINES" class="md:col-span-4 p-1 bg-surface-container-lowest rounded-xl industrial-slot flex">
+            <div class="relative w-full bg-surface-container-high rounded-lg border border-outline-variant/60 overflow-hidden flex flex-col justify-between group">
+              <div class="screw-head top-2.5 left-2.5"></div>
+              <div class="screw-head top-2.5 right-2.5"></div>
+              <div class="screw-head bottom-2.5 left-2.5"></div>
+              <div class="screw-head bottom-2.5 right-2.5"></div>
+              <div class="p-6 h-full flex flex-col justify-between relative">
+                <div>
+                  <div class="flex justify-between items-start mb-6 pt-2">
+                    <div class="p-3 bg-surface-dim rounded border border-outline-variant/65 shadow-inner">
+                      <i data-lucide="cpu" class="w-8 h-8 text-primary"></i>
+                    </div>
+                    <span class="font-mono text-[10px] tracking-wider px-2 py-1 bg-surface-container-highest border border-outline-variant/50 rounded font-bold">
+                      CORE_V2.0
+                    </span>
+                  </div>
+                  <h3 class="font-sans text-2xl font-bold uppercase text-on-surface mb-2">ARPP2</h3>
+                  <p class="font-mono text-xs text-on-surface-variant leading-relaxed mb-6">
+                    Custom raytraced game engine optimized for low-latency hardware clusters and real-time volumetric lighting.
+                  </p>
+                </div>
+                <div class="space-y-4">
+                  <div class="flex items-center gap-4">
+                    <div class="flex-grow h-2.5 bg-surface-dim rounded overflow-hidden shadow-inner border border-outline-variant/30">
+                      <div class="h-full bg-secondary-container rounded-r shadow-[0_0_8px_#00f4fe]" style="width: 88%"></div>
+                    </div>
+                    <span class="font-mono text-xs text-secondary-container font-bold tracking-tight">88% CPU</span>
+                  </div>
+                  <div class="flex gap-1.5 pt-2">
+                    <span class="h-2.5 w-2.5 rounded-full bg-secondary-container led-glow-secondary"></span>
+                    <span class="h-2.5 w-2.5 rounded-full bg-surface-container-highest"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div data-category="UTILITIES" class="md:col-span-8 p-1 bg-surface-container-lowest rounded-xl industrial-slot flex">
+            <div class="relative w-full bg-surface-container-high rounded-lg border border-outline-variant/60 overflow-hidden flex flex-col justify-between group">
+              <div class="screw-head top-2.5 left-2.5"></div>
+              <div class="screw-head top-2.5 right-2.5"></div>
+              <div class="screw-head bottom-2.5 left-2.5"></div>
+              <div class="screw-head bottom-2.5 right-2.5"></div>
+              <div class="flex flex-col h-full justify-between">
+                <div class="h-48 relative overflow-hidden bg-surface-dim">
+                  <img
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoOIAau6fD3H1GiKGHwx_B6WrqrchU9mvpf2xnBJCmcwUXpsxhOBFbSRnnwqIX1j4iPku8xNff52KNZrBuoD-SPBL1ypTAVfG4S8UQmWI2d1EbOp0Duwy4Ag_yFbcsoCdFApSB8E6knlx2FrbH7vmyr-EDZFAR_YWhsP6FVrbtM4yKZ20jNQNYv0DLIMP9dcdtT030EB_6N5ElKgc4cDbgeTDO_v4ovLBEXHXFhfNlI2aB1cdTF7OWHBt-QaWACTb7qISd_gGE2VIl"
+                    alt="Iris Cam"
+                    class="w-full h-full object-cover opacity-65 group-hover:scale-105 group-hover:opacity-85 transition-all duration-700 pointer-events-none"
+                  />
+                  <div class="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-surface-container-high to-transparent"></div>
+                  <div class="absolute inset-0 scanline opacity-10"></div>
+                </div>
+                <div class="p-6 pt-4 relative flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                  <div>
+                    <span class="font-mono text-[10px] font-bold text-primary tracking-widest block uppercase mb-1">
+                      REC_SURVEILLANCE
+                    </span>
+                    <h3 class="font-sans text-2xl font-bold text-on-surface uppercase mb-2">Iris Cam</h3>
+                    <p class="font-mono text-xs text-on-surface-variant leading-relaxed max-w-md">
+                      AI pose tracking and biometric analysis system for real-time skeletal visualization.
+                    </p>
+                  </div>
+                  <div class="flex gap-1.5 self-end">
+                    <span class="h-2.5 w-2.5 rounded-full bg-secondary-container led-glow-secondary"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div data-category="UTILITIES" class="md:col-span-4 p-1 bg-surface-container-lowest rounded-xl industrial-slot flex">
+            <div class="relative w-full bg-surface-container-high rounded-lg border border-outline-variant/60 overflow-hidden flex flex-col justify-between group">
+              <div class="screw-head top-2.5 left-2.5"></div>
+              <div class="screw-head top-2.5 right-2.5"></div>
+              <div class="screw-head bottom-2.5 left-2.5"></div>
+              <div class="screw-head bottom-2.5 right-2.5"></div>
+              <div class="p-6 h-full flex flex-col justify-between relative">
+                <div>
+                  <div class="flex justify-between items-start mb-6 pt-2">
+                    <div class="p-3 bg-surface-dim rounded border border-outline-variant/65 shadow-inner">
+                      <i data-lucide="mouse-pointer-click" class="w-8 h-8 text-on-surface-variant group-hover:text-primary transition-colors"></i>
+                    </div>
+                    <span class="font-mono text-[10px] tracking-wider px-2 py-1 bg-surface-container-highest border border-outline-variant/50 rounded font-bold">
+                      ACTIVE_NODE
+                    </span>
+                  </div>
+                  <h3 class="font-sans text-2xl font-bold uppercase text-on-surface mb-2">S6 Clicker</h3>
+                  <p class="font-mono text-xs text-on-surface-variant leading-relaxed mb-6">
+                    Desktop utility suite for high-precision workflow automation and platform bridging.
+                  </p>
+                </div>
+                <div class="flex flex-wrap gap-2 pt-4">
+                  <span class="px-2.5 py-1 bg-surface-dim border border-outline-variant/60 rounded font-mono text-[10px] text-primary uppercase font-bold tracking-wider">WIN_X64</span>
+                  <span class="px-2.5 py-1 bg-surface-dim border border-outline-variant/60 rounded font-mono text-[10px] text-primary uppercase font-bold tracking-wider">MACOS_ARM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div data-category="UTILITIES" class="md:col-span-4 p-1 bg-surface-container-lowest rounded-xl industrial-slot flex">
+            <div class="relative w-full bg-surface-container-high rounded-lg border border-outline-variant/60 overflow-hidden flex flex-col justify-between group">
+              <div class="screw-head top-2.5 left-2.5"></div>
+              <div class="screw-head top-2.5 right-2.5"></div>
+              <div class="screw-head bottom-2.5 left-2.5"></div>
+              <div class="screw-head bottom-2.5 right-2.5"></div>
+              <div class="p-6 h-full flex flex-col justify-between relative">
+                <div class="absolute top-0 inset-x-0 h-1.5 bg-primary-container"></div>
+                <div>
+                  <div class="flex justify-between items-start mb-6 pt-2">
+                    <div class="p-3 bg-surface-dim rounded border border-outline-variant/65 shadow-inner">
+                      <i data-lucide="binary" class="w-8 h-8 text-primary"></i>
+                    </div>
+                    <span class="font-mono text-[10px] tracking-wider px-2 py-1 bg-surface-container-highest border border-outline-variant/50 rounded font-bold">
+                      ACTIVE_NODE
+                    </span>
+                  </div>
+                  <h3 class="font-sans text-2xl font-bold uppercase text-on-surface mb-2">Smart Waste</h3>
+                  <p class="font-mono text-xs text-on-surface-variant leading-relaxed mb-6">
+                    Custom hardware prototype for automated waste classification and neural-network based sorting.
+                  </p>
+                </div>
+                <div class="grid grid-cols-2 gap-3 mt-auto">
+                  <div class="p-3 bg-surface-dim border border-outline-variant/50 rounded flex flex-col justify-between">
+                    <span class="font-mono text-[9px] text-on-surface-variant uppercase tracking-wider mb-1">Model_ID</span>
+                    <span class="font-label text-xs text-primary font-bold">HW-774-B</span>
+                  </div>
+                  <div class="p-3 bg-surface-dim border border-outline-variant/50 rounded flex flex-col justify-between">
+                    <span class="font-mono text-[9px] text-on-surface-variant uppercase tracking-wider mb-1">Accuracy</span>
+                    <span class="font-label text-xs text-secondary-fixed-dim font-bold">94.2%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- LAB VIEW -->
+      <!-- ========================================== -->
+      <div id="view-lab" class="tab-content space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- CRT Terminal Panel -->
+          <section class="lg:col-span-8 bg-surface-container-low border border-outline-variant p-6 rounded-lg relative overflow-hidden flex flex-col justify-between shadow-2xl metal-texture">
+            <div class="absolute top-3 left-3 opacity-20 font-mono text-[10px]">*</div>
+            <div class="absolute top-3 right-3 opacity-20 font-mono text-[10px]">*</div>
+            <div class="absolute bottom-3 left-3 opacity-20 font-mono text-[10px]">*</div>
+            <div class="absolute bottom-3 right-3 opacity-20 font-mono text-[10px]">*</div>
+
+            <div>
+              <h2 class="font-label text-xs font-bold text-primary-fixed-dim mb-4 flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-primary-container led-orange-glow animate-pulse"></span>
+                CORE_IDENTITY_MODULE
+              </h2>
+
+              <div class="relative bg-surface-container-lowest rounded-xl p-8 border-[12px] border-surface-container shadow-inner min-h-[380px] overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none z-20"></div>
+                <div class="absolute inset-0 scanline opacity-20"></div>
+
+                <div class="relative z-10 flex flex-col justify-between h-full space-y-6">
+                  <div>
+                    <h3 class="font-sans text-4xl md:text-5xl font-bold text-primary mb-3 leading-tight tracking-tight">
+                      Rohan Patil
+                    </h3>
+                    <span class="text-secondary-fixed font-mono text-sm tracking-widest font-bold block uppercase border-b-2 border-outline-variant/30 pb-4">
+                      [ COMPILER_BREAKER_15 ]
+                    </span>
+                  </div>
+                  <p class="font-mono text-sm md:text-base text-on-surface-variant max-w-2xl border-l-2 border-primary-container pl-6 py-2 leading-relaxed">
+                    While you were following tutorials, I was breaking the compilers. 6 Years deep into C++, GDScript, and digital domination. I don't follow trends; I build the engines they run on.
+                  </p>
+                  <div class="flex flex-wrap gap-4 pt-4">
+                    <button onclick="downloadManifesto()" class="bg-primary-container hover:brightness-110 text-on-primary-container px-6 py-3 font-label text-[10px] font-bold tracking-wider rounded flex items-center gap-2 cursor-pointer shadow-md shadow-primary-container/20">
+                      <i data-lucide="download" class="w-4 h-4"></i>
+                      DUMP_MANIFESTO.TXT
+                    </button>
+                    <a href="https://github.com" target="_blank" class="border border-outline-variant hover:border-primary/50 text-on-surface-variant px-6 py-3 font-label text-[10px] font-bold tracking-wider rounded flex items-center gap-2 transition-all cursor-pointer bg-surface-container-low">
+                      <i data-lucide="binary" class="w-4 h-4"></i>
+                      VIEW_REPOSITORY
+                    </a>
+                  </div>
+                </div>
+                <div class="absolute bottom-4 right-4 opacity-5 pointer-events-none select-none text-[10px] font-mono leading-none">
+                  <pre class="text-primary-container">
+01010101 01101110 01101001 01110100 01111001
+01100111 01101111 01100100 01101111 01110100
+01100010 01101100 01100101 01101110 01100100</pre>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Uptime stats panel -->
+          <section class="lg:col-span-4 flex flex-col gap-6">
+            <div class="bg-surface-container-low border border-outline-variant p-6 rounded-lg flex-1 relative flex flex-col justify-between shadow-2xl metal-texture">
+              <div>
+                <h2 class="font-label text-xs font-bold text-on-surface-variant mb-6 flex justify-between items-center border-b border-outline-variant/30 pb-3">
+                  <span>SYSTEM_UPTIME</span>
+                  <i data-lucide="activity" class="w-4 h-4 text-on-secondary-fixed-variant animate-pulse"></i>
+                </h2>
+                <div class="space-y-6">
+                  <div class="space-y-2">
+                    <span class="font-mono text-xs font-bold text-on-surface-variant/70 tracking-wider">ACTIVE_PROJECTS</span>
+                    <div class="flex bg-surface-container-lowest p-2 rounded border border-outline-variant/60 items-center gap-1 shadow-inner">
+                      <span class="bg-surface-container-highest w-8 h-12 flex items-center justify-center font-sans text-2xl font-bold text-primary-container rounded shadow-inner">0</span>
+                      <span class="bg-surface-container-highest w-8 h-12 flex items-center justify-center font-sans text-2xl font-bold text-primary-container rounded shadow-inner">0</span>
+                      <span class="bg-surface-container-highest w-8 h-12 flex items-center justify-center font-sans text-2xl font-bold text-primary-container rounded shadow-inner">5</span>
+                      <span class="w-6 h-12 flex items-center justify-center font-sans text-xl font-bold text-primary">+</span>
+                    </div>
+                  </div>
+                  <div class="space-y-2">
+                    <span class="font-mono text-xs font-bold text-on-surface-variant/70 tracking-wider">ENGINES_DEPLOYED</span>
+                    <div class="flex bg-surface-container-lowest p-2 rounded border border-outline-variant/60 items-center gap-1 shadow-inner">
+                      <span class="bg-surface-container-highest w-8 h-12 flex items-center justify-center font-sans text-2xl font-bold text-secondary-fixed-dim rounded shadow-inner">0</span>
+                      <span class="bg-surface-container-highest w-8 h-12 flex items-center justify-center font-sans text-2xl font-bold text-secondary-fixed-dim rounded shadow-inner">0</span>
+                      <span class="bg-surface-container-highest w-8 h-12 flex items-center justify-center font-sans text-2xl font-bold text-secondary-fixed-dim rounded shadow-inner">4</span>
+                      <span class="w-6 h-12 flex items-center justify-center font-sans text-xl font-bold text-secondary">+</span>
+                    </div>
+                  </div>
+                  <div class="space-y-2">
+                    <span class="font-mono text-xs font-bold text-on-surface-variant/70 tracking-wider">EXP_CYCLE_COUNT</span>
+                    <div class="flex bg-surface-container-lowest p-2 rounded border border-outline-variant/60 items-center gap-1 shadow-inner">
+                      <span class="bg-surface-container-highest w-8 h-12 flex items-center justify-center font-sans text-2xl font-bold text-on-surface rounded shadow-inner">0</span>
+                      <span class="bg-surface-container-highest w-8 h-12 flex items-center justify-center font-sans text-2xl font-bold text-on-surface rounded shadow-inner">0</span>
+                      <span class="bg-surface-container-highest w-8 h-12 flex items-center justify-center font-sans text-2xl font-bold text-on-surface rounded shadow-inner">3</span>
+                      <span class="w-6 h-12 flex items-center justify-center font-sans text-xl font-bold text-on-surface-variant">+</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-center gap-6 opacity-30 pt-4 border-t border-outline-variant/25">
+                <div class="w-4 h-4 rounded-full bg-black shadow-inner flex items-center justify-center">
+                  <div class="w-1.5 h-4 bg-white/20 rotate-45 rounded-full"></div>
+                </div>
+                <div class="w-4 h-4 rounded-full bg-black shadow-inner flex items-center justify-center">
+                  <div class="w-1.5 h-4 bg-white/20 -rotate-45 rounded-full"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- VU Level meters -->
+        <section class="bg-surface-container-high border border-outline-variant p-6 rounded-lg relative overflow-hidden shadow-2xl metal-texture">
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+            <h2 class="font-sans text-2xl font-bold text-on-surface tracking-tight uppercase">
+              POWER_LEVEL_DIAGNOSTICS
+            </h2>
+            <div class="flex items-center gap-4 bg-surface-container-lowest py-2 px-4 rounded border border-outline-variant industrial-slot">
+              <span class="font-label text-[10px] font-bold text-error tracking-wider uppercase">ERR: NONE</span>
+              <span class="relative flex h-3 w-3">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-primary led-orange-glow"></span>
+              </span>
+            </div>
+          </div>
+
+          <!-- VU list -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+            <!-- Godot -->
+            <div class="vu-level-control group">
+              <span class="font-label text-[10px] font-bold text-on-surface-variant group-hover:text-primary transition-colors tracking-widest">GODOT</span>
+              <div class="vu-slide-container">
+                <input id="vu-range-godot" type="range" min="0" max="100" value="95" />
+                <div id="vu-bar-godot" class="vu-meter-bar" style="height: 95%"></div>
+                <div class="absolute inset-x-0 h-full flex flex-col justify-between py-2 pointer-events-none opacity-20">
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                </div>
+              </div>
+              <span id="vu-label-godot" class="font-mono text-xs text-primary font-bold">95% PWR</span>
+            </div>
+
+            <!-- Unity -->
+            <div class="vu-level-control group">
+              <span class="font-label text-[10px] font-bold text-on-surface-variant group-hover:text-primary transition-colors tracking-widest">UNITY</span>
+              <div class="vu-slide-container">
+                <input id="vu-range-unity" type="range" min="0" max="100" value="88" />
+                <div id="vu-bar-unity" class="vu-meter-bar" style="height: 88%"></div>
+                <div class="absolute inset-x-0 h-full flex flex-col justify-between py-2 pointer-events-none opacity-20">
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                </div>
+              </div>
+              <span id="vu-label-unity" class="font-mono text-xs text-primary font-bold">88% PWR</span>
+            </div>
+
+            <!-- Blender -->
+            <div class="vu-level-control group">
+              <span class="font-label text-[10px] font-bold text-on-surface-variant group-hover:text-primary transition-colors tracking-widest">BLENDER</span>
+              <div class="vu-slide-container">
+                <input id="vu-range-blender" type="range" min="0" max="100" value="75" />
+                <div id="vu-bar-blender" class="vu-meter-bar" style="height: 75%"></div>
+                <div class="absolute inset-x-0 h-full flex flex-col justify-between py-2 pointer-events-none opacity-20">
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                </div>
+              </div>
+              <span id="vu-label-blender" class="font-mono text-xs text-primary font-bold">75% PWR</span>
+            </div>
+
+            <!-- Kotlin -->
+            <div class="vu-level-control group">
+              <span class="font-label text-[10px] font-bold text-on-surface-variant group-hover:text-primary transition-colors tracking-widest">KOTLIN</span>
+              <div class="vu-slide-container">
+                <input id="vu-range-kotlin" type="range" min="0" max="100" value="92" />
+                <div id="vu-bar-kotlin" class="vu-meter-bar" style="height: 92%"></div>
+                <div class="absolute inset-x-0 h-full flex flex-col justify-between py-2 pointer-events-none opacity-20">
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                </div>
+              </div>
+              <span id="vu-label-kotlin" class="font-mono text-xs text-primary font-bold">92% PWR</span>
+            </div>
+
+            <!-- Python -->
+            <div class="vu-level-control group">
+              <span class="font-label text-[10px] font-bold text-on-surface-variant group-hover:text-primary transition-colors tracking-widest">PYTHON</span>
+              <div class="vu-slide-container">
+                <input id="vu-range-python" type="range" min="0" max="100" value="80" />
+                <div id="vu-bar-python" class="vu-meter-bar" style="height: 80%"></div>
+                <div class="absolute inset-x-0 h-full flex flex-col justify-between py-2 pointer-events-none opacity-20">
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                  <div class="h-px w-full bg-white"></div>
+                </div>
+              </div>
+              <span id="vu-label-python" class="font-mono text-xs text-primary font-bold">80% PWR</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Schematic circuit stats -->
+        <section class="w-full bg-surface-container-lowest border-2 border-outline-variant p-6 rounded-lg industrial-slot metal-texture">
+          <div class="flex flex-col md:flex-row items-start md:items-center gap-6 overflow-x-auto whitespace-nowrap scrollbar-hide py-1 font-mono text-xs">
+            <div class="flex items-center gap-2">
+              <span class="font-label text-[9px] font-bold text-on-surface-variant">SERIAL:</span>
+              <span class="text-secondary-fixed font-bold">RP-00-112358-1321</span>
+            </div>
+            <div class="hidden md:block h-4 w-px bg-outline-variant/40"></div>
+            <div class="flex items-center gap-2">
+              <span class="font-label text-[9px] font-bold text-on-surface-variant">LOC:</span>
+              <span class="text-secondary-fixed font-bold">VIRTUAL_ENV_01</span>
+            </div>
+            <div class="hidden md:block h-4 w-px bg-outline-variant/40"></div>
+            <div class="flex items-center gap-2">
+              <span class="font-label text-[9px] font-bold text-on-surface-variant">STATUS:</span>
+              <span class="text-primary font-bold animate-pulse">OPTIMAL</span>
+            </div>
+            <div class="flex-grow"></div>
+            <div class="flex gap-2 self-end">
+              <span class="w-2 h-2 rounded-full bg-surface-container-highest"></span>
+              <span class="w-2 h-2 rounded-full bg-primary led-orange-glow animate-pulse"></span>
+              <span class="w-2 h-2 rounded-full bg-surface-container-highest"></span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- CONTACT VIEW -->
+      <!-- ========================================== -->
+      <div id="view-contact" class="tab-content space-y-6">
+        <div class="relative p-6 md:p-8 bg-surface-container border border-outline-variant rounded-lg chassis-bevel metal-texture">
+          <div class="absolute top-4 left-4 flex gap-1.5 z-10">
+            <span class="w-2 h-2 rounded-full bg-error led-orange-glow animate-pulse"></span>
+            <span class="w-2 h-2 rounded-full bg-surface-container-highest"></span>
+            <span class="w-2 h-2 rounded-full bg-surface-container-highest"></span>
+          </div>
+          <div class="absolute top-4 right-4 flex gap-4 font-mono text-xs opacity-50 z-10">
+            <span class="font-bold">COM_STATUS: IDLE</span>
+          </div>
+          <h1 class="font-sans text-4xl md:text-5xl font-bold text-primary uppercase tracking-widest mt-3">
+            INITIATE_CONTACT
+          </h1>
+          <p class="font-mono text-xs text-on-surface-variant max-w-3xl leading-relaxed mt-2 uppercase tracking-wide">
+            ESTABLISHING SECURE CONNECTION TO ROHAN P. // COMMUNICATION_ARRAY_VER_4.2.0...
+          </p>
+          <div class="screw-head top-2 left-2 opacity-30"></div>
+          <div class="screw-head top-2 right-2 opacity-30"></div>
+          <div class="screw-head bottom-2 left-2 opacity-30"></div>
+          <div class="screw-head bottom-2 right-2 opacity-30"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+          <!-- Left form container -->
+          <div class="md:col-span-8 bg-surface-container-low border border-outline-variant p-6 md:p-8 rounded-lg relative shadow-2xl metal-texture">
+            <div class="absolute top-0 right-10 bg-outline-variant h-1.5 w-24"></div>
+
+            <!-- Transmission loader (Logs simulator) -->
+            <div id="transmission-loader" class="h-96 flex flex-col justify-center bg-surface-dim p-6 rounded-lg border border-outline-variant shadow-inner font-mono text-xs space-y-4 overflow-y-auto" style="display: none">
+              <div class="flex items-center gap-3 text-primary uppercase font-bold text-sm border-b border-outline-variant/30 pb-3">
+                <span class="w-2 h-2 rounded-full bg-primary led-orange-glow animate-ping"></span>
+                <span>EXECUTING CRYPTO PAYLOAD TRANSMISSION...</span>
+              </div>
+              <div id="transmission-stream-logs" class="space-y-3 pt-2"></div>
+            </div>
+
+            <!-- Transmission completed successfully screen -->
+            <div id="transmission-success" class="h-96 flex flex-col items-center justify-center text-center space-y-6" style="display: none">
+              <div class="p-4 bg-primary/10 rounded-full border border-primary/30">
+                <i data-lucide="check-circle" class="w-12 h-12 text-primary"></i>
+              </div>
+              <div>
+                <h3 class="font-sans text-2xl font-bold text-on-surface uppercase mb-1">
+                  TRANSMISSION EXECUTED
+                </h3>
+                <p class="font-mono text-xs text-on-surface-variant max-w-md mx-auto leading-relaxed">
+                  The cryptographic message payload was securely packeted and routed to Rohan's portfolio server. Shaking hands complete.
+                </p>
+              </div>
+              <button id="transmission-new-btn" class="bg-primary-container text-on-primary-container font-label text-[10px] font-bold uppercase tracking-wider px-6 py-3 rounded cursor-pointer shadow-md hover:brightness-110">
+                TRANSMIT_NEW_PAYLOAD
+              </button>
+            </div>
+
+            <!-- Contact Input Form -->
+            <form id="contact-chassis-form" class="space-y-6 flex flex-col">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Name -->
+                <div class="space-y-2">
+                  <label class="font-label text-[10px] font-bold text-on-surface-variant block uppercase tracking-wider">
+                    SENDER_ID
+                  </label>
+                  <div class="bg-surface-dim p-1 border-b-2 border-outline-variant focus-within:border-primary transition-colors rounded">
+                    <input
+                      id="form-sender"
+                      required
+                      type="text"
+                      placeholder="ENTER_NAME..."
+                      class="w-full bg-transparent border-none outline-none focus:ring-0 font-mono text-xs py-2 px-3 text-primary placeholder:text-outline-variant/65 uppercase tracking-wide"
+                    />
+                  </div>
+                </div>
+
+                <!-- Email -->
+                <div class="space-y-2">
+                  <label class="font-label text-[10px] font-bold text-on-surface-variant block uppercase tracking-wider">
+                    RETURN_ADDRESS
+                  </label>
+                  <div class="bg-surface-dim p-1 border-b-2 border-outline-variant focus-within:border-primary transition-colors rounded">
+                    <input
+                      id="form-address"
+                      required
+                      type="email"
+                      placeholder="ENTER_EMAIL..."
+                      class="w-full bg-transparent border-none outline-none focus:ring-0 font-mono text-xs py-2 px-3 text-primary placeholder:text-outline-variant/65 uppercase tracking-wide"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Subject -->
+              <div class="space-y-2">
+                <label class="font-label text-[10px] font-bold text-on-surface-variant block uppercase tracking-wider">
+                  COMMUNICATION_SUBJECT
+                </label>
+                <div class="bg-surface-dim p-1 border-b-2 border-outline-variant focus-within:border-primary transition-colors rounded">
+                  <select
+                    id="form-subject"
+                    class="w-full bg-transparent border-none outline-none focus:ring-0 font-mono text-xs py-2 px-3 text-primary cursor-pointer uppercase tracking-wide"
+                  >
+                    <option value="PROJECT_INQUIRY">PROJECT_INQUIRY</option>
+                    <option value="SYSTEM_COLLABORATION">SYSTEM_COLLABORATION</option>
+                    <option value="HARDWARE_CONSULTATION">HARDWARE_CONSULTATION</option>
+                    <option value="GENERAL_PING">GENERAL_PING</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Message -->
+              <div class="space-y-2">
+                <label class="font-label text-[10px] font-bold text-on-surface-variant block uppercase tracking-wider">
+                  ENCRYPTED_MESSAGE_PAYLOAD
+                </label>
+                <div class="bg-surface-dim p-4 border-b-2 border-outline-variant focus-within:border-primary transition-colors rounded h-40">
+                  <textarea
+                    id="form-message"
+                    required
+                    placeholder="INPUT_DATA_STREAM..."
+                    class="w-full h-full bg-transparent border-none outline-none resize-none focus:ring-0 font-mono text-xs text-primary placeholder:text-outline-variant/65 uppercase tracking-wide"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="pt-4 flex justify-end">
+                <button type="submit" class="bg-primary-container hover:brightness-110 active:brightness-90 text-on-primary-container font-label text-[10px] font-bold px-8 py-4 rounded flex items-center gap-3 uppercase cursor-pointer tracking-wider shadow-lg shadow-primary-container/20">
+                  <i data-lucide="send" class="w-4 h-4"></i>
+                  EXECUTE_TRANSMISSION
+                </button>
+              </div>
+            </form>
+
+            <div class="absolute -left-1 top-1/2 -translate-y-1/2 w-1.5 h-24 bg-primary led-orange-glow"></div>
+          </div>
+
+          <!-- Social link node lists -->
+          <div class="md:col-span-4 space-y-6">
+            <div class="bg-surface-container border border-outline-variant p-6 rounded-lg relative overflow-hidden shadow-2xl metal-texture">
+              <div class="absolute -right-12 -top-12 w-32 h-32 border-8 border-outline-variant/15 opacity-20 rounded-full"></div>
+              <h2 class="font-label text-xs font-bold text-on-surface-variant border-b border-outline-variant pb-2 mb-6 uppercase tracking-widest">
+                CONNECTIVITY_NODES
+              </h2>
+
+              <div class="space-y-6">
+                <!-- GitHub -->
+                <a href="https://github.com" target="_blank" class="flex items-center gap-4 group">
+                  <div class="w-12 h-12 rounded-full bg-surface-dim border border-outline-variant flex items-center justify-center p-1 group-hover:border-primary transition-all">
+                    <i data-lucide="terminal" class="w-5 h-5 text-on-surface-variant group-hover:text-primary transition-colors"></i>
+                  </div>
+                  <div>
+                    <div class="font-label text-[10px] font-bold text-on-surface-variant">NODE_01</div>
+                    <div class="font-mono text-xs text-primary font-bold uppercase">GITHUB_REPOS</div>
+                  </div>
+                </a>
+
+                <!-- LinkedIn -->
+                <a href="https://linkedin.com" target="_blank" class="flex items-center gap-4 group">
+                  <div class="w-12 h-12 rounded-full bg-surface-dim border border-outline-variant flex items-center justify-center p-1 group-hover:border-primary transition-all">
+                    <i data-lucide="network" class="w-5 h-5 text-on-surface-variant group-hover:text-primary transition-colors"></i>
+                  </div>
+                  <div>
+                    <div class="font-label text-[10px] font-bold text-on-surface-variant">NODE_02</div>
+                    <div class="font-mono text-xs text-primary font-bold uppercase">LINKEDIN_CORE</div>
+                  </div>
+                </a>
+
+                <!-- Email -->
+                <a href="mailto:patilrohan50009@gmail.com" class="flex items-center gap-4 group">
+                  <div class="w-12 h-12 rounded-full bg-surface-dim border border-outline-variant flex items-center justify-center p-1 group-hover:border-primary transition-all">
+                    <i data-lucide="at-sign" class="w-5 h-5 text-on-surface-variant group-hover:text-primary transition-colors"></i>
+                  </div>
+                  <div>
+                    <div class="font-label text-[10px] font-bold text-on-surface-variant">NODE_03</div>
+                    <div class="font-mono text-xs text-primary font-bold uppercase">DIRECT_UPLINK</div>
+                  </div>
+                </a>
+
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/rohan_2_core/?__pwa=1" target="_blank" class="flex items-center gap-4 group">
+                  <div class="w-12 h-12 rounded-full bg-surface-dim border border-outline-variant flex items-center justify-center p-1 group-hover:border-primary transition-all">
+                    <i data-lucide="instagram" class="w-5 h-5 text-on-surface-variant group-hover:text-primary transition-colors"></i>
+                  </div>
+                  <div>
+                    <div class="font-label text-[10px] font-bold text-on-surface-variant">NODE_04</div>
+                    <div class="font-mono text-xs text-primary font-bold uppercase">INSTAGRAM_FEED</div>
+                  </div>
+                </a>
+              </div>
+
+              <div class="mt-8 p-3 bg-surface-dim rounded border border-outline-variant opacity-60 font-mono text-[10px] leading-relaxed">
+                LATENCY: 12ms<br />
+                UPLINK_STRENGTH: 98.4%<br />
+                SECURE_KEY: RO-PAN-001X
+              </div>
+            </div>
+
+            <!-- Cable schematic blueprint widget -->
+            <div class="bg-surface-container-lowest border border-outline-variant p-4 rounded text-center relative overflow-hidden shadow-xl">
+              <img
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAvLbmyl0upPwp7_TPhbEvt9KqxbvSASoc1RA-PQyvgyz2dija6n7-NJ-qoo8t96QrYJ4B2-pdnm_HcLH9h2Ee91Xv_riXRj3GJxuUtqRoZqoIoEpcvnavXY1YIFR2-jv7WzX-_Uob_0fISvul9b2h2fn_wW2ekgxAH79zSSH7VDo524Dj8HWIaoONtgbtn08FnwOeQBKrJcYNHZ81aRSSsR54JGoFNFTMBGlKcbK0XbJCrYRKeIvSIyz8IyzPVuQIQMY9nHtrdQTu"
+                alt="Schematic Cabling Blueprint"
+                class="w-full h-32 object-cover opacity-60 rounded border border-outline-variant/65 grayscale"
+              />
+              <div class="font-label text-[10px] text-outline-variant font-bold uppercase tracking-wider mt-3">
+                SYSTEM_LOCATION: BENGALURU_IN
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ========================================== -->
+    <!-- TERMINAL SHELL DRAWERS POPUP -->
+    <!-- ========================================== -->
+    <div id="terminal-popup" class="panel-popup p-4">
+      <div class="flex justify-between items-center border-b border-outline-variant/30 pb-2 mb-2">
+        <span class="font-label text-[10px] font-bold text-primary flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-primary led-orange-glow animate-pulse"></span>
+          ACTIVE LOG TERMINAL_V1.0
+        </span>
+        <button id="terminal-close" class="text-on-surface-variant hover:text-on-surface">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Logs screen -->
+      <div id="terminal-logs-stream" class="h-48 overflow-y-auto bg-black rounded p-3 text-[10px] leading-normal font-mono text-on-surface-variant/95 space-y-2.5 shadow-inner select-text scrollbar-hide flex-grow"></div>
+
+      <!-- Prompt Input console -->
+      <div class="flex items-center gap-2 bg-black rounded border border-outline-variant/40 px-3 py-1 text-[11px] mt-2">
+        <span class="text-primary-container font-bold">$</span>
+        <input 
+          id="terminal-console-input"
+          type="text" 
+          placeholder="TYPE 'HELP', 'STATUS', 'SYS_PING'..." 
+          class="bg-transparent border-none outline-none focus:ring-0 text-primary w-full lowercase font-mono placeholder:text-outline-variant/50 border-0 p-0"
+        />
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- COPROCESSOR CHATBOT DRAWER POPUP -->
+    <!-- ========================================== -->
+    <div id="chat-popup" class="panel-popup p-4">
+      <div class="flex justify-between items-center border-b border-primary/30 pb-3 mb-3">
+        <span class="font-label text-[10px] font-bold text-primary flex items-center gap-2 font-sans">
+          <i data-lucide="bot" class="w-4 h-4 text-primary led-orange-glow"></i>
+          COGNITIVE_COPROCESSOR_V3.5
+        </span>
+        <div class="flex items-center gap-3">
+          <span class="h-2 w-2 rounded-full bg-primary led-orange-glow animate-pulse"></span>
+          <button id="chat-close" class="text-on-surface-variant hover:text-on-surface">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Messages Stream -->
+      <div id="chat-messages-stream" class="flex-grow overflow-y-auto bg-black/40 rounded p-3 space-y-4 select-text"></div>
+
+      <!-- Typing Indicator -->
+      <div id="chat-typing-indicator" class="flex flex-col items-start space-y-1 mt-2 mb-2" style="display: none">
+        <div class="text-[9px] font-bold text-primary animate-pulse flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-primary led-orange-glow animate-ping"></span>
+          <span>COPROCESSOR THREAD RUNNING...</span>
+        </div>
+        <div class="bg-surface-container-high border-l-2 border-primary/50 text-on-surface-variant font-mono rounded px-3 py-1.5 text-xs animate-pulse">
+          ⚡ COMPILER PROCESS STREAM SYNCING...
+        </div>
+      </div>
+
+      <!-- Text Input Console -->
+      <div class="flex items-center gap-2 bg-black rounded border border-primary/40 px-3 py-2 mt-3">
+        <span class="text-primary font-bold">&gt;&gt;&gt;</span>
+        <input 
+          id="chat-console-input"
+          type="text" 
+          placeholder="PROMPT REPRESENTATIVE CORE..." 
+          class="bg-transparent border-none outline-none focus:ring-0 text-on-surface text-xs w-full uppercase font-mono placeholder:text-outline-variant/40 border-0 p-0"
+        />
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- HARDWARE SETTINGS DRAWER POPUP -->
+    <!-- ========================================== -->
+    <div id="settings-popup" class="panel-popup p-5 space-y-6">
+      <div class="flex justify-between items-center border-b border-outline-variant/30 pb-2">
+        <span class="font-label text-[10px] font-bold text-secondary flex items-center gap-2 uppercase">
+          <i data-lucide="sliders" class="w-4 h-4"></i>
+          SYSTEM_CFG_MODIFIERS
+        </span>
+        <button id="settings-close" class="text-on-surface-variant hover:text-on-surface">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <!-- CPU throttle range -->
+        <div class="space-y-2">
+          <div class="flex justify-between text-[10px]">
+            <span class="font-bold text-on-surface-variant">CPU_THROTTLE_LOCK</span>
+            <span id="label-cpu" class="text-primary">10%</span>
+          </div>
+          <input id="slider-cpu" type="range" min="0" max="100" value="10" />
+        </div>
+
+        <!-- Hologram Gain range -->
+        <div class="space-y-2">
+          <div class="flex justify-between text-[10px]">
+            <span class="font-bold text-on-surface-variant">HOLOGRAM_GAIN</span>
+            <span id="label-holo" class="text-secondary-fixed">85db</span>
+          </div>
+          <input id="slider-holo" type="range" min="20" max="100" value="85" />
+        </div>
+
+        <!-- Led Stability range -->
+        <div class="space-y-2">
+          <div class="flex justify-between text-[10px]">
+            <span class="font-bold text-on-surface-variant">LED_STABILITY</span>
+            <span id="label-led" class="text-primary">100%</span>
+          </div>
+          <input id="slider-led" type="range" min="10" max="100" value="100" />
+        </div>
+      </div>
+
+      <button id="settings-reset-btn" class="w-full bg-surface-container-highest font-label text-[9px] font-bold py-2.5 rounded border border-outline-variant flex items-center justify-center gap-2 hover:bg-surface-bright active:translate-y-0.5">
+        <i data-lucide="refresh-cw" class="w-3 h-3"></i>
+        RESTORE_HARDWARE_DEFAULTS
+      </button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- COMPILER OVERRIDE MATRIX SCREENSAVER -->
+    <!-- ========================================== -->
+    <div id="screensaver" class="fixed inset-0 z-[100] bg-black overflow-hidden flex flex-col items-center justify-center font-mono">
+      <canvas id="screensaver-canvas" class="absolute inset-0 block w-full h-full opacity-60 pointer-events-none"></canvas>
+      <div class="absolute inset-0 scanline opacity-30 pointer-events-none"></div>
+
+      <!-- floating retro box -->
+      <div class="relative z-10 w-full max-w-2xl bg-[#0e1014] border-2 border-primary border-double rounded-xl p-6 md:p-8 shadow-[0_0_50px_rgba(255,110,64,0.3)] metal-texture m-4">
+        <div class="screw-head top-3 left-3 opacity-60"></div>
+        <div class="screw-head top-3 right-3 opacity-60"></div>
+        <div class="screw-head bottom-3 left-3 opacity-60"></div>
+        <div class="screw-head bottom-3 right-3 opacity-60"></div>
+
+        <div class="flex flex-col md:flex-row items-center justify-between border-b-2 border-primary/40 pb-4 mb-6 gap-4">
+          <div class="flex items-center gap-3">
+            <div class="p-2 bg-primary/10 rounded-lg border border-primary animate-pulse">
+              <i data-lucide="shield-alert" class="w-8 h-8 text-primary"></i>
+            </div>
+            <div>
+              <h2 class="font-sans text-xl font-bold tracking-wider text-primary uppercase">
+                COMPILER INTEGRITY OVERRIDE
+              </h2>
+              <p class="text-[10px] text-on-surface-variant/70 tracking-widest uppercase">
+                BYPASS_LOCK_STATE: DEACTIVATED // SYSTEM_HACK_OK
+              </p>
+            </div>
+          </div>
+          <button id="screensaver-close" class="px-4 py-2 bg-primary/20 hover:bg-primary hover:text-on-primary transition-all text-primary font-label text-[10px] font-bold uppercase tracking-wider rounded border border-primary/50 cursor-pointer self-stretch md:self-auto flex items-center justify-center gap-2">
+            <i data-lucide="x" class="w-4 h-4"></i> RE-ENGAGE DEFAULTS
+          </button>
+        </div>
+
+        <div class="space-y-6">
+          <div class="p-4 bg-black/80 rounded border border-primary/30 shadow-inner">
+            <div class="flex items-center gap-2 text-primary font-bold text-xs uppercase mb-3 border-b border-primary/25 pb-1">
+              <i data-lucide="terminal" class="w-4 h-4"></i>
+              <span>OVERCLOCKING REPORT // ARCHITECT: ROHAN PATIL</span>
+            </div>
+            <p class="text-sm text-on-surface leading-relaxed uppercase">
+              "While you were following tutorials, I was breaking the compilers. 6 Years deep into C++, GDScript, and digital domination. I don't follow trends; I build the engines they run on."
+            </p>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex justify-between items-center text-[10px] font-bold text-on-surface-variant">
+              <span>EXPLOSIVE INTEGRATION OVERRIDE PROGRESS:</span>
+              <span class="text-secondary-fixed animate-pulse">OPTIMIZED (99.9%)</span>
+            </div>
+            <div class="h-2 bg-black rounded overflow-hidden border border-primary/20">
+              <div class="h-full bg-gradient-to-r from-primary to-secondary-container rounded-r w-[99.9%] transition-all duration-1000"></div>
+            </div>
+          </div>
+
+          <!-- screensaver logs output -->
+          <div id="screensaver-logs-stream" class="bg-black text-[10px] p-4 rounded h-36 font-mono text-primary/80 overflow-y-auto space-y-1.5 shadow-inner leading-normal select-text scrollbar-hide border border-primary/10"></div>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-primary/25 flex flex-col sm:flex-row justify-between items-center text-[9px] text-[#ffb59c] gap-2 font-mono uppercase tracking-widest">
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="cpu" class="w-3.5 h-3.5 text-primary"></i>
+            <span>ROHAN_CORE_V1.5 // LOCK: BYPASSED</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="binary" class="w-3.5 h-3.5 text-secondary-container"></i>
+            <span>EXPLOIT PATHWAY: SOLID HANDSHAKE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RETRO SOLID FOOTER METADATA -->
+    <footer class="fixed bottom-0 left-0 w-full bg-surface-container-lowest/90 backdrop-blur border-t-2 border-outline-variant z-30 py-3 block md:flex justify-between items-center px-6 md:px-12 gap-8 shadow-[0_-4px_12px_rgba(0,0,0,0.45)]">
+      <div class="font-label text-[10px] font-bold text-on-surface-variant text-center md:text-left">
+        SYSTEM_STABLE // REV_2024.04
+      </div>
+      <div class="flex gap-6 justify-center py-2 md:py-0 font-mono text-[10px] uppercase font-semibold">
+        <span class="text-on-surface-variant/40 hover:text-secondary-fixed transition-colors cursor-crosshair">ST-PORT_01</span>
+        <span class="text-on-surface-variant/40 hover:text-secondary-fixed transition-colors cursor-crosshair">ST-PORT_02</span>
+        <span class="text-on-surface-variant/40 hover:text-secondary-fixed transition-colors cursor-crosshair">ST-PORT_03</span>
+      </div>
+      <div class="flex items-center gap-2 justify-center md:justify-end">
+        <span class="h-2 w-2 rounded-full bg-secondary-container led-glow-secondary"></span>
+        <span class="font-mono text-[9px] font-bold tracking-widest uppercase text-on-surface-variant/75">
+          CONNECTION_SECURE
+        </span>
+      </div>
+    </footer>
+
+    <!-- Lucide Icon Library -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      // Load Lucide icons immediately
+      lucide.createIcons();
+
+      // Manifesto document generator downloader
+      function downloadManifesto() {
+        const manifestoText = `===========================================
+OBSIDIAN PROTOCOL // SYSTEM CORE MANIFESTO 
+===========================================
+[ARCHITECT STATE: OPTIMAL]
+[LOCATION: VIRTUAL_ENV_01]
+
+Bridging the gap between digital physics and creative architecture.
+We create, we refine, we execute at low-latency.
+
+Primary Directives:
+1. IMPECCABLE HARDWARE-SOFTWARE INTEGRATION
+2. GRAPHICS ENGINE COMPILER LATENCY UNDER 1MS
+3. GENERATIVE PROCEDURAL FRAMEWORKS AT MASSIVE GRAPH SCALE
+4. RETAIN TACTILE DESIGN INTEGRITY ACROSS ALL MODULAR NODES
+
+- ROHAN P. // SYSTEM_CORE_ARCHITECT
+===========================================`;
+        const blob = new Blob([manifestoText], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'DUMP_MANIFESTO.txt';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }
+
+      // Filter projects list cards layout
+      function filterModules(category) {
+        const container = document.getElementById('projects-bento-container');
+        const cards = container.querySelectorAll('[data-category]');
+
+        // Update filters styling
+        const filterIds = {
+          'ALL_UNITS': 'filter-btn-all',
+          'GAMES': 'filter-btn-games',
+          'ENGINES': 'filter-btn-engines',
+          'UTILITIES': 'filter-btn-utilities'
+        };
+
+        Object.keys(filterIds).forEach(cat => {
+          const btn = document.getElementById(filterIds[cat]);
+          if (cat === category) {
+            btn.className = "px-4 py-2 font-label text-[10px] font-bold rounded uppercase transition-colors tracking-wider bg-primary text-on-primary";
+          } else {
+            btn.className = "px-4 py-2 font-label text-[10px] font-bold rounded uppercase transition-colors tracking-wider text-on-surface-variant hover:bg-surface-container-highest";
+          }
+        });
+
+        // Hide/Show cards
+        cards.forEach(card => {
+          const cardCat = card.getAttribute('data-category');
+          if (category === 'ALL_UNITS' || cardCat === category) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+    </script>
+    <!-- Core App logic -->
+    <script src="script.js"></script>
   </body>
 </html>
-
