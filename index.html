@@ -3,7 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DEV_CORE_OS_V1.0 // Rohan Patil</title>
+    <title>021211 // Rohan Patil</title>
+    
+    <!-- Global Error Catcher for Diagnostics -->
+    <script>
+      (function() {
+        var errors = [];
+        window.onerror = function(message, source, lineno, colno, error) {
+          errors.push({ type: 'Error', message: message, source: source, lineno: lineno, colno: colno, stack: error ? error.stack : null });
+          showErrors();
+        };
+        window.onunhandledrejection = function(e) {
+          errors.push({ type: 'Unhandled Rejection', message: e.reason && e.reason.stack ? e.reason.stack : e.reason });
+          showErrors();
+        };
+        function showErrors() {
+          if (!errors.length) return;
+          var container = document.getElementById('debug-error-container');
+          if (!container) {
+            container = document.createElement('div');
+            container.id = 'debug-error-container';
+            container.style.cssText = 'position:fixed;top:0;left:0;width:100%;background:#8b0000;color:#fff;padding:20px;z-index:999999;font-family:monospace;font-size:14px;white-space:pre-wrap;box-sizing:border-box;border-bottom:5px solid #ff0000;';
+            if (document.body) {
+              document.body.appendChild(container);
+            } else {
+              document.documentElement.appendChild(container);
+            }
+          }
+          container.innerHTML = errors.map(function(err) {
+            return '<strong>[' + err.type.toUpperCase() + ']</strong>\n' +
+                   'Message: ' + err.message + '\n' +
+                   (err.source ? 'Source: ' + err.source + ' (Line ' + err.lineno + ':' + err.colno + ')\n' : '') +
+                   (err.stack ? 'Stack:\n' + err.stack + '\n' : '');
+          }).join('\n<hr style="border:1px solid #ff0000;margin:10px 0;">\n');
+        }
+        window.addEventListener('DOMContentLoaded', showErrors);
+      })();
+    </script>
     
     <!-- Tailwind CSS Play CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -90,7 +126,7 @@
           id="header-logo"
           class="font-sans text-xl md:text-2xl font-bold text-primary tracking-tighter uppercase cursor-pointer select-none active:scale-95 transition-transform hover:brightness-110 flex items-center gap-1.5"
         >
-          DEV_CORE_OS_V1.0
+          021211
         </div>
 
         <!-- Desktop Nav -->
@@ -155,24 +191,46 @@
             <div class="lg:col-span-8 space-y-6">
               <div class="recessed-panel rounded-lg p-6 md:p-8 border border-outline-variant/20 relative overflow-hidden">
                 <div class="scanline absolute inset-0 opacity-15"></div>
-                <div class="flex items-center gap-3 mb-6">
-                  <span class="relative flex h-3 w-3">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-3 w-3 bg-primary led-orange-glow"></span>
-                  </span>
-                  <span class="font-label text-xs font-bold text-primary tracking-widest">SYSTEM_ACTIVE</span>
+                
+                <div class="flex flex-col md:flex-row gap-8 items-start md:items-center">
+                  <!-- Photo scan chassis -->
+                  <div class="w-full md:w-72 aspect-video flex-shrink-0 relative border-2 border-outline-variant p-1 bg-surface-container-lowest rounded-lg overflow-hidden group/photo">
+                    <img src="img.png" alt="Rohan Patil" class="w-full h-full object-cover rounded brightness-95 contrast-105 transition-all duration-500 ease-out pointer-events-none" />
+                    <!-- Scan overlays -->
+                    <div class="absolute inset-0 scanline opacity-20 pointer-events-none"></div>
+                    <div class="absolute bottom-1 inset-x-1 py-0.5 bg-black/75 border-t border-outline-variant text-[7px] font-label font-bold text-center tracking-widest text-primary uppercase select-none">
+                      SYS_SCAN_RP.PNG
+                    </div>
+                    <div class="screw-head top-1 left-1 w-1 h-1"></div>
+                    <div class="screw-head top-1 right-1 w-1 h-1"></div>
+                    <div class="screw-head bottom-1 left-1 w-1 h-1"></div>
+                    <div class="screw-head bottom-1 right-1 w-1 h-1"></div>
+                  </div>
+
+                  <!-- Text details -->
+                  <div class="flex-grow space-y-4">
+                    <div class="flex flex-wrap items-center gap-3">
+                      <span class="relative flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-primary led-orange-glow"></span>
+                      </span>
+                      <span class="font-label text-xs font-bold text-primary tracking-widest">SYSTEM_ACTIVE</span>
+                      <span class="text-on-surface-variant/40 hidden md:inline">|</span>
+                      <span class="font-mono text-[10px] text-secondary font-bold uppercase tracking-wide bg-secondary/10 border border-secondary/20 px-2 py-0.5 rounded shadow-inner" id="daily-status-badge">STATUS: LOADING...</span>
+                    </div>
+                    <h1 class="font-sans text-4xl md:text-5xl font-bold text-on-surface tracking-tighter uppercase leading-none">
+                      Rohan Patil
+                    </h1>
+                    <div class="border-l-4 border-primary pl-4">
+                      <p class="font-label text-xs md:text-sm font-bold uppercase tracking-wider text-on-surface-variant leading-none">
+                        14 Years Old // Godot & Unity Specialist
+                      </p>
+                    </div>
+                    <p class="font-mono text-xs md:text-sm text-on-surface/90 leading-relaxed">
+                      "While you were following tutorials, I was breaking the compilers. 5 Years deep into Godot, Unity, and digital domination. I don't follow trends; I build the engines they run on."
+                    </p>
+                  </div>
                 </div>
-                <h1 class="font-sans text-5xl md:text-6xl font-bold text-on-surface tracking-tighter uppercase mb-4">
-                  Rohan Patil
-                </h1>
-                <div class="border-l-4 border-primary pl-4 mb-8">
-                  <p class="font-label text-xs md:text-sm font-bold uppercase tracking-wider text-on-surface-variant leading-none">
-                    15 Years Old // C++ GDScript Specialist
-                  </p>
-                </div>
-                <p class="font-mono text-base md:text-lg text-on-surface/90 leading-relaxed max-w-3xl">
-                  "While you were following tutorials, I was breaking the compilers. 6 Years deep into C++, GDScript, and digital domination. I don't follow trends; I build the engines they run on."
-                </p>
               </div>
 
               <!-- Switches -->
@@ -249,31 +307,65 @@
             </div>
           </div>
 
-          <!-- Featured Project Grid Card -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-            <div id="my-guilty-card" class="tactile-raised rounded-xl overflow-hidden group cursor-pointer border border-outline-variant/30 flex flex-col h-full md:col-start-2">
+          <!-- Featured Project Grid Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+            <!-- NoPy Card -->
+            <a href="https://nopy.onrender.com/" target="_blank" class="tactile-raised rounded-xl overflow-hidden group border border-outline-variant/30 flex flex-col h-full hover:border-primary/50 transition-all duration-300">
               <div class="h-48 relative overflow-hidden bg-surface-container-lowest">
                 <img
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0VnIvDmmi3tXG5G1xeO10uGhYz91dUUoh9dkypDyVqzsp5ytG85_F5JgzXyPI_B2Ejy2J2OED3_56_FfpLsyl9Kk-IUtVQO16CcTaJiQwAY-H0yuYZu0IzApgWyxbtJXEq4phrfLpJRB1LGralyd9OsMx3xI71Zy8r7Wa9pCid4F3Z7z6FCpRav_hMfM7QO1PIUP9iap45fipClFQK3_mrUoRcVzAi_ow9pudCflj_FxJV5yuvU7ruPveiMv_l3v_gKiDsAyxP6U6"
-                  alt="Ghost Shell"
-                  class="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-500 ease-out"
+                  src="Nopy.png"
+                  alt="NoPy Editor"
+                  class="w-full h-full object-cover brightness-90 group-hover:brightness-100 group-hover:scale-105 transition-all duration-500 ease-out"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/90 via-transparent to-transparent"></div>
                 <span class="absolute bottom-4 left-4 font-label text-[10px] font-bold px-2.5 py-1 uppercase tracking-wider rounded bg-primary text-on-primary">
-                  FEATURED_PROJECT
+                  NODE_PYTHON_EDITOR
                 </span>
               </div>
               <div class="p-6 flex flex-col flex-grow justify-between">
                 <div>
                   <h4 class="font-sans text-xl font-bold tracking-tight text-on-surface group-hover:text-primary transition-colors mb-2 uppercase">
-                    GHOST_SHELL
+                    NOPY
                   </h4>
                   <p class="font-mono text-xs text-on-surface-variant leading-relaxed">
-                    AI-driven NPC behavior system using hierarchical task networks.
+                    A web-based, zero-install Python editor and execution sandbox powered by Node.js.
                   </p>
                 </div>
+                <div class="mt-4 pt-3 border-t border-outline-variant/20 flex justify-between items-center text-[10px] font-mono text-primary uppercase font-bold">
+                  <span>LAUNCH_UTILITY</span>
+                  <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                </div>
               </div>
-            </div>
+            </a>
+
+            <!-- X-Bind Card -->
+            <a href="https://github.com/INIooo/X-Bind" target="_blank" class="tactile-raised rounded-xl overflow-hidden group border border-outline-variant/30 flex flex-col h-full hover:border-secondary/50 transition-all duration-300">
+              <div class="h-48 relative overflow-hidden bg-surface-container-lowest">
+                <img
+                  src="X-bind.png"
+                  alt="X-Bind Tool"
+                  class="w-full h-full object-cover brightness-90 group-hover:brightness-100 group-hover:scale-105 transition-all duration-500 ease-out"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/90 via-transparent to-transparent"></div>
+                <span class="absolute bottom-4 left-4 font-label text-[10px] font-bold px-2.5 py-1 uppercase tracking-wider rounded bg-secondary text-on-secondary">
+                  INPUT_MAPPER_PY
+                </span>
+              </div>
+              <div class="p-6 flex flex-col flex-grow justify-between">
+                <div>
+                  <h4 class="font-sans text-xl font-bold tracking-tight text-on-surface group-hover:text-secondary transition-colors mb-2 uppercase">
+                    X-BIND
+                  </h4>
+                  <p class="font-mono text-xs text-on-surface-variant leading-relaxed">
+                    Downloadable Python utility wrapping mouse/keyboard inputs into virtual Xbox controller feeds with custom macro scripting.
+                  </p>
+                </div>
+                <div class="mt-4 pt-3 border-t border-outline-variant/20 flex justify-between items-center text-[10px] font-mono text-secondary uppercase font-bold">
+                  <span>CLONE_REPOSITORY</span>
+                  <i data-lucide="github" class="w-3.5 h-3.5"></i>
+                </div>
+              </div>
+            </a>
           </div>
         </div>
       </div>
@@ -288,7 +380,7 @@
               Deployed Modules
             </h1>
             <p class="font-mono text-xs font-bold text-on-surface-variant/70 uppercase tracking-widest">
-              S_ID: ROHAN_P // STATUS: ONLINE // PROJECTS_ACTIVE: 05
+              S_ID: ROHAN_P // STATUS: ONLINE // PROJECTS_ACTIVE: 06
             </p>
           </div>
 
@@ -426,8 +518,8 @@
                     <div class="p-3 bg-surface-dim rounded border border-outline-variant/65 shadow-inner">
                       <i data-lucide="mouse-pointer-click" class="w-8 h-8 text-on-surface-variant group-hover:text-primary transition-colors"></i>
                     </div>
-                    <span class="font-mono text-[10px] tracking-wider px-2 py-1 bg-surface-container-highest border border-outline-variant/50 rounded font-bold">
-                      ACTIVE_NODE
+                    <span class="font-mono text-[10px] tracking-wider px-2 py-1 bg-surface-container-highest border border-outline-variant/50 rounded font-bold text-error">
+                      TEARED_OUT
                     </span>
                   </div>
                   <h3 class="font-sans text-2xl font-bold uppercase text-on-surface mb-2">S6 Clicker</h3>
@@ -443,42 +535,78 @@
             </div>
           </div>
 
-          <!-- Card 5 -->
+          <!-- Card 5 (NoPy) -->
+          <div data-category="UTILITIES" class="md:col-span-8 p-1 bg-surface-container-lowest rounded-xl industrial-slot flex">
+            <div class="relative w-full bg-surface-container-high rounded-lg border border-outline-variant/60 overflow-hidden flex flex-col justify-between group flex-grow">
+              <div class="screw-head top-2.5 left-2.5"></div>
+              <div class="screw-head top-2.5 right-2.5"></div>
+              <div class="screw-head bottom-2.5 left-2.5"></div>
+              <div class="screw-head bottom-2.5 right-2.5"></div>
+              <div class="flex flex-col h-full justify-between">
+                <div class="h-48 relative overflow-hidden bg-surface-dim">
+                  <img
+                    src="Nopy.png"
+                    alt="NoPy"
+                    class="w-full h-full object-cover opacity-65 group-hover:scale-105 group-hover:opacity-85 transition-all duration-700 pointer-events-none"
+                  />
+                  <div class="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-surface-container-high to-transparent"></div>
+                  <div class="absolute inset-0 scanline opacity-10"></div>
+                </div>
+                <div class="p-6 pt-4 relative flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                  <div>
+                    <span class="font-mono text-[10px] font-bold text-primary tracking-widest block uppercase mb-1">
+                      05 // PYTHON_WEB_EDITOR
+                    </span>
+                    <h3 class="font-sans text-2xl font-bold text-on-surface uppercase mb-2">NoPy</h3>
+                    <p class="font-mono text-xs text-on-surface-variant leading-relaxed max-w-md">
+                      A Node.js based online Python code editor and execution sandbox. Write, run, and share scripts dynamically with zero setup.
+                    </p>
+                  </div>
+                  <a href="https://nopy.onrender.com/" target="_blank" class="px-4 py-2 font-label text-[10px] font-bold rounded uppercase tracking-wider bg-primary text-on-primary hover:brightness-110 flex items-center gap-1.5 self-end transition-all">
+                    <span>LAUNCH</span>
+                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 6 (X-Bind) -->
           <div data-category="UTILITIES" class="md:col-span-4 p-1 bg-surface-container-lowest rounded-xl industrial-slot flex">
-            <div class="relative w-full bg-surface-container-high rounded-lg border border-outline-variant/60 overflow-hidden flex flex-col justify-between group">
+            <div class="relative w-full bg-surface-container-high rounded-lg border border-outline-variant/60 overflow-hidden flex flex-col justify-between group flex-grow">
               <div class="screw-head top-2.5 left-2.5"></div>
               <div class="screw-head top-2.5 right-2.5"></div>
               <div class="screw-head bottom-2.5 left-2.5"></div>
               <div class="screw-head bottom-2.5 right-2.5"></div>
               <div class="p-6 h-full flex flex-col justify-between relative">
-                <div class="absolute top-0 inset-x-0 h-1.5 bg-primary-container"></div>
                 <div>
                   <div class="flex justify-between items-start mb-6 pt-2">
                     <div class="p-3 bg-surface-dim rounded border border-outline-variant/65 shadow-inner">
-                      <i data-lucide="binary" class="w-8 h-8 text-primary"></i>
+                      <i data-lucide="gamepad-2" class="w-8 h-8 text-secondary-fixed-dim group-hover:text-secondary transition-colors"></i>
                     </div>
-                    <span class="font-mono text-[10px] tracking-wider px-2 py-1 bg-surface-container-highest border border-outline-variant/50 rounded font-bold">
-                      ACTIVE_NODE
+                    <span class="font-mono text-[10px] tracking-wider px-2 py-1 bg-surface-container-highest border border-outline-variant/50 rounded font-bold text-secondary">
+                      INPUT_DRIVER
                     </span>
                   </div>
-                  <h3 class="font-sans text-2xl font-bold uppercase text-on-surface mb-2">Smart Waste</h3>
+                  <h3 class="font-sans text-2xl font-bold uppercase text-on-surface mb-2">X-Bind</h3>
                   <p class="font-mono text-xs text-on-surface-variant leading-relaxed mb-6">
-                    Custom hardware prototype for automated waste classification and neural-network based sorting.
+                    A desktop input utility built in Python to convert keyboard & mouse controls into virtual Xbox controller signals with custom macro scripting.
                   </p>
                 </div>
-                <div class="grid grid-cols-2 gap-3 mt-auto">
-                  <div class="p-3 bg-surface-dim border border-outline-variant/50 rounded flex flex-col justify-between">
-                    <span class="font-mono text-[9px] text-on-surface-variant uppercase tracking-wider mb-1">Model_ID</span>
-                    <span class="font-label text-xs text-primary font-bold">HW-774-B</span>
+                <div class="flex items-center justify-between gap-2 pt-4">
+                  <div class="flex flex-wrap gap-1">
+                    <span class="px-2 py-0.5 bg-surface-dim border border-outline-variant/60 rounded font-mono text-[9px] text-primary uppercase font-bold">PYTHON</span>
+                    <span class="px-2 py-0.5 bg-surface-dim border border-outline-variant/60 rounded font-mono text-[9px] text-primary uppercase font-bold">XINPUT</span>
                   </div>
-                  <div class="p-3 bg-surface-dim border border-outline-variant/50 rounded flex flex-col justify-between">
-                    <span class="font-mono text-[9px] text-on-surface-variant uppercase tracking-wider mb-1">Accuracy</span>
-                    <span class="font-label text-xs text-secondary-fixed-dim font-bold">94.2%</span>
-                  </div>
+                  <a href="https://github.com/INIooo/X-Bind" target="_blank" class="px-3 py-1.5 font-label text-[9px] font-bold rounded uppercase tracking-wider border border-outline-variant text-on-surface-variant hover:text-secondary hover:border-secondary transition-all flex items-center gap-1">
+                    <span>GET</span>
+                    <i data-lucide="github" class="w-3 h-3"></i>
+                  </a>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -510,11 +638,11 @@
                       Rohan Patil
                     </h3>
                     <span class="text-secondary-fixed font-mono text-sm tracking-widest font-bold block uppercase border-b-2 border-outline-variant/30 pb-4">
-                      [ COMPILER_BREAKER_15 ]
+                      [ COMPILER_BREAKER_14 ]
                     </span>
                   </div>
                   <p class="font-mono text-sm md:text-base text-on-surface-variant max-w-2xl border-l-2 border-primary-container pl-6 py-2 leading-relaxed">
-                    While you were following tutorials, I was breaking the compilers. 6 Years deep into C++, GDScript, and digital domination. I don't follow trends; I build the engines they run on.
+                    While you were following tutorials, I was breaking the compilers. 5 Years deep into Godot, Unity, and digital domination. I don't follow trends; I build the engines they run on.
                   </p>
                   <div class="flex flex-wrap gap-4 pt-4">
                     <button onclick="downloadManifesto()" class="bg-primary-container hover:brightness-110 text-on-primary-container px-6 py-3 font-label text-[10px] font-bold tracking-wider rounded flex items-center gap-2 cursor-pointer shadow-md shadow-primary-container/20">
@@ -551,7 +679,7 @@
                     <div class="flex bg-surface-container-lowest p-2 rounded border border-outline-variant/60 items-center gap-1 shadow-inner">
                       <span class="bg-surface-container-highest w-8 h-12 flex items-center justify-center font-sans text-2xl font-bold text-primary-container rounded shadow-inner">0</span>
                       <span class="bg-surface-container-highest w-8 h-12 flex items-center justify-center font-sans text-2xl font-bold text-primary-container rounded shadow-inner">0</span>
-                      <span class="bg-surface-container-highest w-8 h-12 flex items-center justify-center font-sans text-2xl font-bold text-primary-container rounded shadow-inner">5</span>
+                      <span class="bg-surface-container-highest w-8 h-12 flex items-center justify-center font-sans text-2xl font-bold text-primary-container rounded shadow-inner">6</span>
                       <span class="w-6 h-12 flex items-center justify-center font-sans text-xl font-bold text-primary">+</span>
                     </div>
                   </div>
@@ -1098,7 +1226,7 @@
               <span>OVERCLOCKING REPORT // ARCHITECT: ROHAN PATIL</span>
             </div>
             <p class="text-sm text-on-surface leading-relaxed uppercase">
-              "While you were following tutorials, I was breaking the compilers. 6 Years deep into C++, GDScript, and digital domination. I don't follow trends; I build the engines they run on."
+              "While you were following tutorials, I was breaking the compilers. 5 Years deep into Godot, Unity, and digital domination. I don't follow trends; I build the engines they run on."
             </p>
           </div>
 

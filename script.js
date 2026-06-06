@@ -25,7 +25,7 @@ let chatMessages = [
 
 // Terminal logs
 let terminalLogs = [
-  "BOOT: DEV_CORE_OS_V1.0 INITIALIZING...",
+  "BOOT: 021211 INITIALIZING...",
   "SYS_OK: ALL OPTICAL SUBSYSTEMS REPORTING GREEN",
   "NET_OK: ESTABLISHED MULTI-CHANNEL LINK WITH PORT 3000"
 ];
@@ -54,6 +54,7 @@ window.addEventListener('DOMContentLoaded', () => {
   initChat();
   initContactForm();
   initVUMeters();
+  initDailyStatus();
   startGlobalSimulators();
 });
 
@@ -92,10 +93,6 @@ function initNavigation() {
   const btnContactRedirect = document.getElementById('bento-btn-contact');
   if (btnContactRedirect) {
     btnContactRedirect.addEventListener('click', () => switchTab('CONTACT'));
-  }
-  const projectGridCard = document.getElementById('my-guilty-card');
-  if (projectGridCard) {
-    projectGridCard.addEventListener('click', () => switchTab('PROJECTS'));
   }
 
   // Developer Logo clicks easter egg trigger
@@ -315,7 +312,7 @@ function executeTerminalCommand(cmd) {
       }, 1200);
     } else if (['secret', 'easter', 'egg', 'eggs'].includes(normalizedCmd)) {
       addTerminalLog("--- SECURITY INTERFACE BYPASS DECRYPTED ---");
-      addTerminalLog("EASTER_EGG_NODE_01: CLICK ON THE TOP 'DEV_CORE_OS_V1.0' BRAND LOGO 5 TIMES.");
+      addTerminalLog("EASTER_EGG_NODE_01: CLICK ON THE TOP '021211' BRAND LOGO 5 TIMES.");
       addTerminalLog("EASTER_EGG_NODE_02: RUN CMD 'BREAK_COMPILER' TO ENGAGE MAXIMUM POWER SCREENAVER INTRUSION.");
       addTerminalLog("EASTER_EGG_NODE_03: IN THE CHATBOT, ASK TO EXPLODE COMPILERS OR TYPE '/BYPASS'.");
       addTerminalLog("-------------------------------------------");
@@ -726,5 +723,120 @@ function unlockSecret() {
   if (logo) {
     // Add sparkles icon or similar glow dynamically
     logo.classList.add('active-glow');
+  }
+}
+
+// ----------------------------------------------------
+// DAILY HINGLISH STATUS SYSTEM
+// ----------------------------------------------------
+const dailyStatuses = [
+  "Kehti sasta Christopher Nolan",
+  "Da Vinci ki basement mein lock",
+  "Coding in my sleep, debugging in my nightmares",
+  "C++ compiler has more mood swings than my crush",
+  "Trying to fix bugs that I wrote 5 minutes ago",
+  "10th class ki math, Godot physics engine ke bharose",
+  "Error line 420: Brain.exe not responding",
+  "Daadi bolti hai Google ka CEO banega, main semicolon dhund raha hu",
+  "Sasta hacker: Pentagon bypass ho na ho, WiFi bypass zaroor hoga",
+  "System crash ho gaya aur career bhi",
+  "Making games because real life has bad graphics",
+  "100% bugs, 0% documentation, 200% confidence",
+  "Hogwarts letter didn't arrive, so I became a programmer",
+  "Writing spaghetti code like a true Italian chef",
+  "Keyboard warrior from India, defeated by a missing bracket",
+  "Git commit message: 'Please work, mummy kasam'",
+  "I am the reason my CPU is crying at 95 degrees",
+  "Crying in Unity's garbage collector",
+  "Kehti, 'tum game banate ho ya hamare feelings ke sath khelte ho?'",
+  "8GB RAM mein Unreal Engine chalane ka ghamand hai",
+  "Professional overthinker, part-time coder",
+  "Trying to compile my life, getting 404 errors",
+  "Daadi ka phone fix kiya, now I'm the family IT specialist",
+  "Life is a game, and I'm stuck on the loading screen",
+  "9th standard marksheet is temporarily deprecated",
+  "Blender cube delete karne ka scene hi alag hai",
+  "Running on caffeine, hope, and unstable electricity",
+  "Board exams are coming, but side projects are calling",
+  "C++ pointer se jyada clear toh mera future hai",
+  "Converting single-player life to local co-op (Need Player 2)",
+  "Sasta Tony Stark in a middle-class garage",
+  "Error 418: I am a teapot, let me brew some chai",
+  "Trying to find the 'any' key on my keyboard",
+  "Ctrl + Z can't fix my life decisions",
+  "Coding logic is solid, math teacher disagrees",
+  "Debugging in production because I like living on the edge",
+  "PC specs dictate my happiness index",
+  "My code compiles, time to buy a lottery ticket",
+  "Working on a game engine that will never see the light of day",
+  "Kehti, 'You care about Godot nodes more than me'",
+  "Living in India, sleeping in Eastern Standard Time",
+  "Game development is 10% coding, 90% screaming at the console",
+  "System.out.println('Zindagi barbad')",
+  "Stack Overflow is my legal guardian",
+  "Sarcasm level: Compiling with warnings as errors",
+  "Designing boss fights while losing to 10th grade physics",
+  "Local compiler breaker, global disappointment",
+  "C++ compiler: 'Are you sure about this?' Me: 'No, but run it'",
+  "Debugging is like solving a murder where you are the killer",
+  "Game physics: gravity is just a suggestion",
+  "Laptop heating up, saving money on room heaters",
+  "Kehti sasta Hideo Kojima, but without the budget",
+  "Writing code to solve problems created by my code",
+  "My social skills are like Internet Explorer",
+  "Code run ho gaya, ab chalo mandir chalte hain",
+  "Life dynamic template argument ki tarah unstable hai",
+  "High ping in conversations, low latency in code",
+  "Board exams are temporary, github commits are permanent",
+  "Running my life on a single-core thread",
+  "My PC fans sound like a Boeing 747 taking off",
+  "Game development is my therapy, though it causes the stress",
+  "Sasta Sherlock Holmes, tracing memory leaks",
+  "Infinite loops: Because exit conditions are for losers",
+  "Searching for bugs like moms search for lost keys",
+  "Godot signal connection se jyada stable connectivity chahiye",
+  "Semicolon was found guilty of first-degree compiler murder",
+  "Coding in dark mode because light attracts bugs",
+  "Converting tea into complex algorithm bugs",
+  "Living in 3D viewport, rendering issues in 2D life",
+  "Kehti, 'Tumhari life mein variables bohot change hote hain'",
+  "If at first you don't succeed, comment it out",
+  "Homework load speed: 0.1 kbps. Side project load speed: 10 Gbps",
+  "14-year-old developer, 40-year-old back pain",
+  "Trying to optimize my life, getting memory overflow",
+  "Learning C++ was my character development arc",
+  "Designing open-world games while locked in a 10x10 room",
+  "Sasta matrix agent, stuck in Chalisgaon simulation",
+  "My script runs, my life crawls",
+  "AI will replace me? Bro, my code doesn't even run yet",
+  "Keyboard keys fading faster than my hopes of getting sleep",
+  "I put the 'error' in 'trial and error'",
+  "My codebase is like a house of cards on a windy day",
+  "Unity editor crashing: My daily meditation routine",
+  "Sasta Elon Musk, rocket launcher banaya par Blender mein",
+  "When in doubt, restart the editor",
+  "C++ templates: where sanity goes to die",
+  "Living life in windowed mode",
+  "I don't need sleep, I need answers to my compiler errors",
+  "My code is clean, it's the runtime that's dirty",
+  "Chasing bugs like tourists chase auto-rickshaws in Mumbai",
+  "Godot node hierarchy is cleaner than my room",
+  "Making retro games because my PC can't run modern ones",
+  "Kehti, 'Tum developer ho toh mera dimaag debug kar do'",
+  "Compiling code: The best excuse to do absolutely nothing",
+  "Brain cells: 404 not found while reading compiler logs",
+  "Designing high-speed gameplay with a low-spec brain",
+  "Sasta cyber security expert (saves passwords in plain text)",
+  "Game designer: Because real world rules are boring",
+  "Typing speed: 120 WPM, thinking speed: 2 WPM",
+  "Terminal prompt: user_core@021211:~$ Zindagi_Khatam --force"
+];
+
+function initDailyStatus() {
+  const badge = document.getElementById('daily-status-badge');
+  if (badge) {
+    const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+    const index = Math.abs(dayOfYear) % dailyStatuses.length;
+    badge.textContent = `STATUS: ${dailyStatuses[index].toUpperCase()}`;
   }
 }
